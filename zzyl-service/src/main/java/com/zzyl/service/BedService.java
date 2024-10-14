@@ -1,5 +1,6 @@
 package com.zzyl.service;
 
+import com.zzyl.dto.BedDto;
 import com.zzyl.vo.BedVo;
 
 import java.util.List;
@@ -17,4 +18,28 @@ public interface BedService {
      */
     List<BedVo> getBedsByRoomId(Long roomId);
 
+    /**
+     * 新增床位
+     * @param bedDto
+     */
+    void addBed(BedDto bedDto);
+
+    /**
+     * 根据id查询床位
+     * @param id
+     * @return
+     */
+    BedVo getBedById(Long id);
+
+    /**
+     * 更新床位
+     * @param bedDto
+     */
+    void updateBed(BedDto bedDto);
+
+    /**
+     * 通过ID删除床位
+     * @param id 床位ID
+     */
+    void deleteBedById(Long id);
 }
