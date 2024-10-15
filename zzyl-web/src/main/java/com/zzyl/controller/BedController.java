@@ -59,6 +59,7 @@ public class BedController extends BaseController {
     @GetMapping("/read/{id}")
     @ApiOperation("根据ID查询床位")
     public ResponseResult readBed(@PathVariable("id") Long id){
+        logger.info("根据Id查询床位:{}",id);
         BedVo bed = bedService.getBedById(id);
         return success(bed);
     }
@@ -71,6 +72,7 @@ public class BedController extends BaseController {
     @PutMapping("/update")
     @ApiOperation("更新床位")
     public ResponseResult updateBed(@RequestBody BedDto bedDto){
+        logger.info("更新床位:{}",bedDto);
         bedService.updateBed(bedDto);
         return success();
     }
@@ -83,6 +85,7 @@ public class BedController extends BaseController {
     @DeleteMapping("/delete/{id}")
     @ApiOperation("删除床位")
     public ResponseResult deleteBed(@PathVariable("id") Long id) {
+        logger.info("根据Id删除床位:{}",id);
         bedService.deleteBedById(id);
         return success();
     }
