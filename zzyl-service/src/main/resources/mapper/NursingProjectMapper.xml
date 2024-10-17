@@ -18,6 +18,12 @@
         <result column="update_time" property="updateTime"/>
         <result column="creator" property="creator"/>
     </resultMap>
+    <insert id="insert">
+        insert into nursing_project (name, order_no, unit, price, image, nursing_requirement, status, create_by,
+                                     update_by, remark, create_time, update_time)
+        values (#{name}, #{orderNo}, #{unit}, #{price}, #{image}, #{nursingRequirement}, #{status}, #{createBy},
+                #{updateBy}, #{remark}, #{createTime}, #{updateTime})
+    </insert>
 
 
     <select id="selectByPage" resultMap="nursingProjectResultMap">

@@ -3,9 +3,12 @@ package com.zzyl.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
+import com.zzyl.dto.NursingProjectDto;
+import com.zzyl.entity.NursingProject;
 import com.zzyl.mapper.NursingProjectMapper;
 import com.zzyl.service.NursingProjectService;
 import com.zzyl.vo.NursingProjectVo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +33,28 @@ public class NursingProjectServiceImpl implements NursingProjectService {
      */
     @Override
     public PageResponse<NursingProjectVo> getByPage(String name, Integer status, Integer pageNum, Integer pageSize) {
+        //定义PageHelper的页码和每页大小
         PageHelper.startPage(pageNum,pageSize);
+
+        //执行分页查询数据,返回 Page<NursingProjectVo>
         Page<NursingProjectVo> page = nursingProjectMapper.selectByPage(name, status);
+
+        //将查询返回结果封装为 PageResponse<NursingProjectVo>
         PageResponse<NursingProjectVo> pageResponse = new PageResponse(page);
-        pageResponse.setRecords(page.getResult());
+        pageResponse.setRecords(page.getResult());//封装当前页数的数据列表
+
+        //返回数据
         return pageResponse;
+    }
+
+    /**
+     * 新增护理项目
+     * @param nursingProjectDto
+     */
+    @Override
+    public void add(NursingProjectDto nursingProjectDto) {
+        NursingProject nursingProject = new NursingProject();
+        BeanUtils.copyProperties(nursingProjectDto, nursingProject);
+        nursingProjectMapper.insert(nursingProject);
     }
 }
