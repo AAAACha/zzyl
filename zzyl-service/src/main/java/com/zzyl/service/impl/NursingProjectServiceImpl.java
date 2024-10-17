@@ -1,5 +1,6 @@
 package com.zzyl.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
@@ -56,5 +57,27 @@ public class NursingProjectServiceImpl implements NursingProjectService {
         NursingProject nursingProject = new NursingProject();
         BeanUtils.copyProperties(nursingProjectDto, nursingProject);
         nursingProjectMapper.insert(nursingProject);
+    }
+
+    /**
+     * 根据id查询护理项目
+     * @param id
+     * @return
+     */
+    @Override
+    public NursingProjectVo getById(Long id) {
+        NursingProject nursingProject = nursingProjectMapper.selectById(id);
+        return BeanUtil.toBean(nursingProject, NursingProjectVo.class);
+    }
+
+    /**
+     * 修改护理项目信息
+     * @param nursingProjectDto
+     */
+    @Override
+    public void update(NursingProjectDto nursingProjectDto) {
+        NursingProject nursingProject = new NursingProject();
+        BeanUtils.copyProperties(nursingProjectDto,nursingProject);
+        nursingProjectMapper.update(nursingProject);
     }
 }

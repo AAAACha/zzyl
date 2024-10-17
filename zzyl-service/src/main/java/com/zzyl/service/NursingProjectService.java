@@ -26,4 +26,17 @@ public interface NursingProjectService {
      * @param nursingProjectDto
      */
     void add(NursingProjectDto nursingProjectDto);
+
+    /**
+     * 根据id查询护理项目
+     * @param id
+     * @return
+     */
+    NursingProjectVo getById(Long id);
+
+    /**
+     * 修改护理项目信息
+     * @param nursingProjectDto
+     */
+    void update(NursingProjectDto nursingProjectDto);
 }

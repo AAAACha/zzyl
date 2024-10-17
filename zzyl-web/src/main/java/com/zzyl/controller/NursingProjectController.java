@@ -61,4 +61,28 @@ public class NursingProjectController {
         nursingProjectService.add(nursingProjectDto);
         return ResponseResult.success();
     }
+
+    /**
+     * 根据id查询护理项目
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询护理项目")
+    public ResponseResult<NursingProjectVo> getById(@PathVariable("id") Long id){
+        NursingProjectVo nursingProjectVo = nursingProjectService.getById(id);
+        return ResponseResult.success(nursingProjectVo);
+    }
+
+    /**
+     * 修改护理项目
+     * @param nursingProjectDto
+     * @return
+     */
+    @PutMapping
+    @ApiOperation("修改护理项目")
+    public ResponseResult update(@RequestBody NursingProjectDto nursingProjectDto){
+        nursingProjectService.update(nursingProjectDto);
+        return ResponseResult.success();
+    }
 }
