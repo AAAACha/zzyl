@@ -34,4 +34,10 @@ public interface NursingPlanMapper {
      * @return
      */
     NursingPlan selectById(Long id);
+
+    /**
+     * 根据id删除护理计划
+     * @param id
+     */
+    void deleteById(Long id);
 }
