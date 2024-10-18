@@ -78,12 +78,12 @@ public class NursingProjectController extends BaseController{
     /**
      * 根据id 删除床位
      */
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     @ApiOperation("删除护理项目")
-    public ResponseResult deleteProjectById(@PathVariable("id") Long id){
+    public ResponseResult deleteProjectById(@PathVariable Long id){
         logger.info("根据id删除护理项目:{}",id);
         nursingProjectService.deleteProjectById(id);
-        return ResponseResult.success();
+        return success();
     }
 
     /**
@@ -96,5 +96,14 @@ public class NursingProjectController extends BaseController{
     public ResponseResult update(@RequestBody NursingProjectDto nursingProjectDto){
         nursingProjectService.update(nursingProjectDto);
         return ResponseResult.success();
+    }
+    @PutMapping("/{id}/status/{status}")
+    @ApiOperation("jinyongqiyomg")
+    public ResponseResult updateStatus(
+            @PathVariable int id,
+            @PathVariable int status
+            ){
+        nursingProjectService.updateStatus(id,status);
+        return success();
     }
 }
