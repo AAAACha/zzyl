@@ -53,7 +53,7 @@
                 nl.name like concat('%',#{name},'%')
             </if>
             <if test="status!=null">
-                and np.status = #{status}
+                and nl.status = #{status}
             </if>
         </where>
         order by nl.update_time asc,nl.create_time desc
