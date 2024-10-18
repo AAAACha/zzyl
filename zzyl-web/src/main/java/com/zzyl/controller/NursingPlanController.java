@@ -106,4 +106,17 @@ public class NursingPlanController {
         nursingPlanService.update(nursingPlan);
         return ResponseResult.success();
     }
+
+    /**
+     * 启用/禁用护理计划
+     * @param id
+     * @param status
+     * @return
+     */
+    @PutMapping("/{id}/status/{status}")
+    @ApiOperation("启用/禁用护理计划")
+    public ResponseResult enableOrDisable(@PathVariable Long id, @PathVariable Integer status){
+        nursingPlanService.enableOrDisable(id,status);
+        return  ResponseResult.success();
+    }
 }

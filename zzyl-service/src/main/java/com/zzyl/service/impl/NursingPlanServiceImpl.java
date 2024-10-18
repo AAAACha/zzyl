@@ -114,4 +114,14 @@ public class NursingPlanServiceImpl implements NursingPlanService {
         }
         nursingPlanMapper.update(plan);
     }
+
+    /**
+     * 启用/禁用护理计划
+     * @param id
+     * @param status
+     */
+    @Override
+    public void enableOrDisable(Long id, Integer status) {
+        nursingPlanMapper.updateStatus(id, status);
+    }
 }

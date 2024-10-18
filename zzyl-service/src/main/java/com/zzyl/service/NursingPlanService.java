@@ -53,4 +53,11 @@ public interface NursingPlanService {
      * @param nursingPlan
      */
     void update(NursingPlanDto nursingPlan);
+
+    /**
+     * 启用/禁用护理计划
+     * @param id
+     * @param status
+     */
+    void enableOrDisable(Long id, Integer status);
 }
