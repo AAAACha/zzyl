@@ -7,6 +7,7 @@ import com.zzyl.base.PageResponse;
 import com.zzyl.entity.NursingPlan;
 import com.zzyl.mapper.NursingPlanMapper;
 import com.zzyl.service.NursingPlanService;
+import com.zzyl.service.NursingProjectPlanService;
 import com.zzyl.vo.NursingPlanVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,9 @@ public class NursingPlanServiceImpl implements NursingPlanService {
 
     @Autowired
     private NursingPlanMapper nursingPlanMapper;
+
+    @Autowired
+    private NursingProjectPlanService nursingProjectPlanService;
 
     /**
      * 查询所有护理计划
@@ -64,8 +68,8 @@ public class NursingPlanServiceImpl implements NursingPlanService {
      */
     @Override
     public void deleteById(Long id) {
-
-
+        //删除关联关系
+        nursingProjectPlanService.deleteByNursingPlanId(id);
         nursingPlanMapper.deleteById(id);
     }
 }
