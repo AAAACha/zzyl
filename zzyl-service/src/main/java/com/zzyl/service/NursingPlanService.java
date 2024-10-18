@@ -33,4 +33,10 @@ public interface NursingPlanService {
      * @return
      */
     NursingPlanVo getById(Long id);
+
+    /**
+     * 根据id删除护理计划
+     * @param id
+     */
+    void deleteById(Long id);
 }

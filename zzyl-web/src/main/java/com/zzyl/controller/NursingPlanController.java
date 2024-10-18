@@ -69,4 +69,15 @@ public class NursingPlanController {
         NursingPlanVo nursingPlanVo = nursingPlanService.getById(id);
         return ResponseResult.success(nursingPlanVo);
     }
+
+    /**
+     * 根据id删除护理计划
+     * @param id
+     */
+    @DeleteMapping("/{id}")
+    @ApiOperation("根据id删除护理计划")
+    public ResponseResult deleteById(@PathVariable("id") Long id){
+        nursingPlanService.deleteById(id);
+        return ResponseResult.success();
+    }
 }

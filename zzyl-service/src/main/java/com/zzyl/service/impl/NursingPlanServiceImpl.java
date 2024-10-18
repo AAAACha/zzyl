@@ -61,4 +61,13 @@ public class NursingPlanServiceImpl implements NursingPlanService {
         NursingPlan nursingPlan = nursingPlanMapper.selectById(id);
         return BeanUtil.toBean(nursingPlan, NursingPlanVo.class);
     }
+
+    /**
+     * 根据id删除护理计划
+     * @param id
+     */
+    @Override
+    public void deleteById(Long id) {
+        nursingPlanMapper.deleteById(id);
+    }
 }
