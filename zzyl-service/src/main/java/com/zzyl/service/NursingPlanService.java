@@ -46,4 +46,11 @@ public interface NursingPlanService {
      * @param nursingPlanDto
      */
     void add(NursingPlanDto nursingPlanDto);
+
+
+    /**
+     * 修改护理计划
+     * @param nursingPlan
+     */
+    void update(NursingPlanDto nursingPlan);
 }

@@ -24,4 +24,11 @@
             #{item.createBy}, #{item.updateBy}, #{item.remark}, #{item.createTime}, #{item.updateTime})
         </foreach>
     </insert>
+
+    <delete id="deleteByIds">
+        delete from nursing_project_plan where id in
+        <foreach collection="list" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
 </mapper>
