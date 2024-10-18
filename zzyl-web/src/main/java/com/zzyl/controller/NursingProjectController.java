@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.*;
  * @Author AvA
  * @Date 2024-10-15
  */
+
 @RestController
 @RequestMapping("/nursing_project")
 @Api(tags = "护理项目管理")
-public class NursingProjectController {
+public class NursingProjectController extends BaseController{
 
     @Autowired
     private NursingProjectService nursingProjectService;
@@ -72,6 +73,17 @@ public class NursingProjectController {
     public ResponseResult<NursingProjectVo> getById(@PathVariable("id") Long id){
         NursingProjectVo nursingProjectVo = nursingProjectService.getById(id);
         return ResponseResult.success(nursingProjectVo);
+    }
+
+    /**
+     * 根据id 删除床位
+     */
+    @DeleteMapping("/delete/{id}")
+    @ApiOperation("删除护理项目")
+    public ResponseResult deleteProjectById(@PathVariable("id") Long id){
+        logger.info("根据id删除护理项目:{}",id);
+        nursingProjectService.deleteProjectById(id);
+        return ResponseResult.success();
     }
 
     /**
