@@ -5,6 +5,7 @@ import com.zzyl.entity.NursingProject;
 import com.zzyl.vo.NursingProjectVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * @Descriptioin NursingProjectMapper
@@ -43,4 +44,7 @@ public interface NursingProjectMapper {
      * @param id
      */
     void deleteProjectById(Long id);
+
+    @Update("UPDATE nursing_project np set status=#{status} WHERE id=#{id}")
+    void updateStatus(int id, int status);
 }
