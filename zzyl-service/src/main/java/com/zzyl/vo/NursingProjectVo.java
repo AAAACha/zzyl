@@ -7,12 +7,11 @@ import lombok.Data;
 import java.math.BigDecimal;
 
 /**
- * @Descriptioin NursingProjectVo
- * @Author AvA
- * @Date 2024-10-15
+ * 护理项目视图对象
  */
 @Data
 public class NursingProjectVo extends BaseVo {
+
     @ApiModelProperty(value = "名称")
     private String name;
 
