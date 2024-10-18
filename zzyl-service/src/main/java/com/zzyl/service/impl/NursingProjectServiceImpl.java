@@ -80,4 +80,12 @@ public class NursingProjectServiceImpl implements NursingProjectService {
         BeanUtils.copyProperties(nursingProjectDto,nursingProject);
         nursingProjectMapper.update(nursingProject);
     }
+
+    /**
+     * 根据id删除护理项目
+     */
+    @Override
+    public void deleteProjectById(Long id) {
+        nursingProjectMapper.deleteProjectById(id);
+    }
 }

@@ -53,8 +53,8 @@
         </collection>
     </resultMap>
     <sql id="Base_Column_List">
-        id
-        , name, contract_no, pdf_url, member_phone, elder_id, start_time, end_time, status,
+
+        id, name, contract_no, pdf_url, member_phone, elder_id, start_time, end_time, status,
     sort, level_desc, create_time, create_by, update_time, update_by, remark, check_in_no,
     sign_date, release_submitter, release_date, release_pdf_url
     </sql>
