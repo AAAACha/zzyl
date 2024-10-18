@@ -42,13 +42,10 @@ public class NursingPlanServiceImpl implements NursingPlanService {
      */
     @Override
     public PageResponse<NursingPlanVo> page(String name, Integer status, Integer pageNum, Integer pageSize) {
-        PageHelper.startPage(pageNum,pageSize);
-        Page<NursingPlanVo> page = nursingPlanMapper.page(name,status);
-
-        PageResponse<NursingPlanVo> pageResponse = new PageResponse(page);
-        pageResponse.setRecords(page.getResult());
-
-        return pageResponse;
+        // 使用 PageHelper 分页插件
+        PageHelper.startPage(pageNum, pageSize);
+        Page<List<NursingPlan>> lists = nursingPlanMapper.page(pageNum, pageSize, name, status);// 获取所有护理计划
+        return PageResponse.of(lists, NursingPlanVo.class);
     }
 
     /**
@@ -58,8 +55,7 @@ public class NursingPlanServiceImpl implements NursingPlanService {
      */
     @Override
     public NursingPlanVo getById(Long id) {
-        NursingPlan nursingPlan = nursingPlanMapper.selectById(id);
-        return BeanUtil.toBean(nursingPlan, NursingPlanVo.class);
+        return nursingPlanMapper.selectById(id);
     }
 
     /**
@@ -68,6 +64,8 @@ public class NursingPlanServiceImpl implements NursingPlanService {
      */
     @Override
     public void deleteById(Long id) {
+
+
         nursingPlanMapper.deleteById(id);
     }
 }

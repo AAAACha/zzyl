@@ -3,16 +3,33 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zzyl.mapper.NursingPlanMapper">
 
-    <resultMap id="NursingPlanResultMap" type="com.zzyl.vo.NursingPlanVo">
-        <id column="id" property="id"/>
-        <result column="plan_name" property="planName"/>
-        <result column="sort_no" property="sortNo"/>
+    <resultMap id="NursingPlanMap" type="com.zzyl.vo.NursingPlanVo">
+        <id property="id" column="id"/>
+        <result property="planName" column="plan_name"/>
+        <result property="sortNo" column="sort_no"/>
         <result column="status" property="status"/>
         <result column="create_by" property="createBy"/>
         <result column="update_by" property="updateBy"/>
         <result column="remark" property="remark"/>
         <result column="create_time" property="createTime"/>
         <result column="update_time" property="updateTime"/>
+        <result column="creator" property="creator"/>
+        <result column="lid" property="lid"/>
+        <result column="count" property="count"></result>
+        <collection property="projectPlans" ofType="com.zzyl.vo.NursingProjectPlanVo">
+            <id property="id" column="pid"/>
+            <result property="planId" column="plan_id"/>
+            <result property="projectId" column="project_id"/>
+            <result property="executeTime" column="execute_time"/>
+            <result property="executeCycle" column="execute_cycle"/>
+            <result property="executeFrequency" column="execute_frequency"/>
+            <result column="create_by" property="createBy"/>
+            <result column="update_by" property="updateBy"/>
+            <result column="remark" property="remark"/>
+            <result column="create_time" property="createTime"/>
+            <result column="update_time" property="updateTime"/>
+            <result column="project_name" property="projectName"/>
+        </collection>
     </resultMap>
     <delete id="deleteById">
         delete
@@ -20,27 +37,76 @@
         where id = #{id}
     </delete>
 
-    <select id="getAllNursingPlans" resultMap="NursingPlanResultMap">
-        select * from nursing_plan
+    <select id="getAllNursingPlans" resultMap="NursingPlanMap">
+        SELECT a.id,
+               a.status,
+               a.sort_no,
+               a.plan_name,
+               a.create_by,
+               a.update_by,
+               a.remark,
+               a.create_time,
+               a.update_time,
+               p.id as pid,
+               plan_id,
+               project_id,
+               execute_time,
+               execute_cycle,
+               execute_frequency,
+               p.create_by,
+               p.update_by,
+               p.remark,
+               p.create_time,
+               p.update_time
+        from nursing_plan as a
+                 left join nursing_project_plan p ON p.plan_id = a.id
+        ORDER BY a.sort_no, a.create_time DESC
     </select>
 
-    <select id="page" resultMap="NursingPlanResultMap">
-        select np.*, su.real_name as creator
-        from nursing_plan as np left join sys_user as su on np.create_by = su.id
+    <select id="page" resultMap="NursingPlanMap">
+        SELECT np.id, np.status, np.sort_no, np.plan_name, np.create_by, np.update_by, np.remark, np.create_time,np.update_time
+        , su.real_name as creator,count(nl.id) count
+        FROM nursing_plan np
+        LEFT JOIN sys_user su ON np.create_by = su.id
+        left join nursing_level nl on np.id = nl.lplan_id
         <where>
             <if test="name != null and name != ''">
-                and plan_name like concat('%',#{name},'%')
+                and np.plan_name like CONCAT('%',#{name},'%')
             </if>
+
             <if test="status != null">
-                and status = #{status}
+                and np.status = #{status}
             </if>
         </where>
-        order by sort_no, create_time desc
+        group by np.id
+        ORDER BY np.sort_no, np.create_time DESC
     </select>
 
-    <select id="selectById" resultType="com.zzyl.entity.NursingPlan">
-        select *
-        from nursing_plan
-        where id = #{id}
+    <select id="selectById" parameterType="java.lang.Long" resultMap="NursingPlanMap">
+        SELECT a.id,
+               a.status,
+               a.sort_no,
+               a.plan_name,
+               a.create_by,
+               a.update_by,
+               a.remark,
+               a.create_time,
+               a.update_time,
+               p.id   as pid,
+               plan_id,
+               project_id,
+               execute_time,
+               execute_cycle,
+               execute_frequency,
+               p.create_by,
+               p.update_by,
+               p.remark,
+               p.create_time,
+               p.update_time,
+               n.name as project_name
+        from nursing_plan as a
+                 left join nursing_project_plan p ON p.plan_id = a.id
+                 left join nursing_project n on n.id = p.project_id
+        WHERE a.id = #{id}
     </select>
 </mapper>
