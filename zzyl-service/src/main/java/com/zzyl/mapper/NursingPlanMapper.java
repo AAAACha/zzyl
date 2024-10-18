@@ -52,4 +52,11 @@ public interface NursingPlanMapper {
      * @param plan
      */
     void update(NursingPlan plan);
+
+    /**
+     * nursingPlanMapper.updateStatus(id, status);
+     * @param id
+     * @param status
+     */
+    void updateStatus(Long id, Integer status);
 }

@@ -46,6 +46,14 @@
         where id = #{id};
     </update>
 
+    <update id="updateStatus">
+        UPDATE nursing_plan
+        SET status      = #{status},
+            update_time = #{updateTime},
+            update_by   = #{updateBy}
+        WHERE id = #{id}
+    </update>
+
     <delete id="deleteById">
         delete
         from nursing_plan
