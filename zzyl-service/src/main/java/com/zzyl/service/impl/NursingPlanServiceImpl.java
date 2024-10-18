@@ -4,8 +4,11 @@ import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.zzyl.base.PageResponse;
+import com.zzyl.dto.NursingPlanDto;
+import com.zzyl.dto.NursingProjectPlanDto;
 import com.zzyl.entity.NursingPlan;
 import com.zzyl.mapper.NursingPlanMapper;
+import com.zzyl.mapper.NursingProjectPlanMapper;
 import com.zzyl.service.NursingPlanService;
 import com.zzyl.service.NursingProjectPlanService;
 import com.zzyl.vo.NursingPlanVo;
@@ -71,5 +74,19 @@ public class NursingPlanServiceImpl implements NursingPlanService {
         //删除关联关系
         nursingProjectPlanService.deleteByNursingPlanId(id);
         nursingPlanMapper.deleteById(id);
+    }
+
+    /**
+     * 添加护理计划
+     * @param nursingPlanDto
+     */
+    @Override
+    public void add(NursingPlanDto nursingPlanDto) {
+        NursingPlan plan = BeanUtil.toBean(nursingPlanDto, NursingPlan.class);
+        plan.setStatus(1);
+        nursingPlanMapper.insert(plan);
+        List<NursingProjectPlanDto> projectPlans = nursingPlanDto.getProjectPlans();
+        projectPlans.forEach(value -> value.setPlanId(plan.getId()));
+        nursingProjectPlanService.addList(nursingPlanDto.getProjectPlans());
     }
 }

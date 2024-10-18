@@ -2,6 +2,7 @@ package com.zzyl.controller;
 
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
+import com.zzyl.dto.NursingPlanDto;
 import com.zzyl.service.NursingPlanService;
 import com.zzyl.vo.NursingPlanVo;
 import io.swagger.annotations.Api;
@@ -78,6 +79,18 @@ public class NursingPlanController {
     @ApiOperation("根据id删除护理计划")
     public ResponseResult deleteById(@PathVariable("id") Long id){
         nursingPlanService.deleteById(id);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 添加护理计划
+     * @param nursingPlanDto
+     * @return
+     */
+    @PostMapping
+    @ApiOperation("添加护理计划")
+    public ResponseResult addNursingPlan(@RequestBody NursingPlanDto nursingPlanDto){
+        nursingPlanService.add(nursingPlanDto);
         return ResponseResult.success();
     }
 }

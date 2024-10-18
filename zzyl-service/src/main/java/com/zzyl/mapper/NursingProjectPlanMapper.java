@@ -1,7 +1,10 @@
 package com.zzyl.mapper;
 
+import com.zzyl.entity.NursingProjectPlan;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @Descriptioin NursingProjectPlanMapper
@@ -16,4 +19,7 @@ public interface NursingProjectPlanMapper {
      */
     @Delete("delete from nursing_project_plan where plan_id = #{nursingPlanId}")
     void deleteByNursingPlanId(Long id);
+
+
+    int insertList(List<NursingProjectPlan> projectPlanList);
 }
