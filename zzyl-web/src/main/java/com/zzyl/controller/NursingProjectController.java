@@ -17,10 +17,11 @@ import org.springframework.web.bind.annotation.*;
  * @Author AvA
  * @Date 2024-10-15
  */
+
 @RestController
 @RequestMapping("/nursing_project")
 @Api(tags = "护理项目管理")
-public class NursingProjectController {
+public class NursingProjectController extends BaseController{
 
     @Autowired
     private NursingProjectService nursingProjectService;
@@ -75,6 +76,17 @@ public class NursingProjectController {
     }
 
     /**
+     * 根据id 删除床位
+     */
+    @DeleteMapping("/{id}")
+    @ApiOperation("删除护理项目")
+    public ResponseResult deleteProjectById(@PathVariable Long id){
+        logger.info("根据id删除护理项目:{}",id);
+        nursingProjectService.deleteProjectById(id);
+        return success();
+    }
+
+    /**
      * 修改护理项目
      * @param nursingProjectDto
      * @return
@@ -84,5 +96,14 @@ public class NursingProjectController {
     public ResponseResult update(@RequestBody NursingProjectDto nursingProjectDto){
         nursingProjectService.update(nursingProjectDto);
         return ResponseResult.success();
+    }
+    @PutMapping("/{id}/status/{status}")
+    @ApiOperation("jinyongqiyomg")
+    public ResponseResult updateStatus(
+            @PathVariable int id,
+            @PathVariable int status
+            ){
+        nursingProjectService.updateStatus(id,status);
+        return success();
     }
 }

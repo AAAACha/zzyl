@@ -39,4 +39,9 @@ public interface NursingProjectService {
      * @param nursingProjectDto
      */
     void update(NursingProjectDto nursingProjectDto);
+
+    //根据id删除护理项目
+    void deleteProjectById(Long id);
+
+    void updateStatus(int id, int status);
 }
