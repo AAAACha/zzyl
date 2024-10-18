@@ -1,5 +1,6 @@
 package com.zzyl.mapper;
 
+import com.github.pagehelper.Page;
 import com.zzyl.vo.NursingPlanVo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -18,4 +19,10 @@ public interface NursingPlanMapper {
      * @return
      */
     List<NursingPlanVo> getAllNursingPlans();
+
+    /**
+     * 护理计划条件分页查询
+     * @return
+     */
+    Page<NursingPlanVo> page();
 }

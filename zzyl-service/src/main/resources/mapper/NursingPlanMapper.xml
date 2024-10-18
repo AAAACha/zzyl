@@ -18,4 +18,18 @@
     <select id="getAllNursingPlans" resultMap="NursingPlanResultMap">
         select * from nursing_plan
     </select>
+
+    <select id="page" resultType="com.zzyl.vo.NursingPlanVo">
+        select np.*,su.real_name as creator
+        from nursing_plan as np left join sys_user as su on np.create_by = su.id
+        <where>
+            <if test="name != null and name != ''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        </where>
+        order by sort_no, create_time desc
+    </select>
 </mapper>

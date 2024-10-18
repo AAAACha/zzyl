@@ -1,5 +1,6 @@
 package com.zzyl.service;
 
+import com.zzyl.base.PageResponse;
 import com.zzyl.vo.NursingPlanVo;
 
 import java.util.List;
@@ -15,4 +16,14 @@ public interface NursingPlanService {
      * 查询所有护理计划
      */
     List<NursingPlanVo> getAllNursingPlans();
+
+    /**
+     *护理计划条件分页查询
+     * @param name
+     * @param status
+     * @param pageNum
+     * @param pageSize
+     * @return
+     */
+    PageResponse<NursingPlanVo> page(String name, Integer status, Integer pageNum, Integer pageSize);
 }
