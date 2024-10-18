@@ -41,5 +41,9 @@ public interface NursingPlanMapper {
      */
     void deleteById(Long id);
 
-
+    /**
+     * 插入护理计划
+     * @param plan
+     */
+    void insert(NursingPlan plan);
 }

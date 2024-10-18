@@ -1,5 +1,9 @@
 package com.zzyl.service;
 
+import com.zzyl.dto.NursingProjectPlanDto;
+
+import java.util.List;
+
 /**
  * @Descriptioin NursingProjectPlanService
  * @Author AvA
@@ -12,4 +16,7 @@ public interface NursingProjectPlanService {
      * @param id
      */
     void deleteByNursingPlanId(Long id);
+
+
+    int addList(List<NursingProjectPlanDto> projectPlans);
 }
