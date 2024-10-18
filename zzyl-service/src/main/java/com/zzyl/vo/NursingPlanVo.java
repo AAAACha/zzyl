@@ -1,39 +1,34 @@
 package com.zzyl.vo;
 
 import com.zzyl.base.BaseVo;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
-/**
- * @Descriptioin NursingPlanVo
- * @Author AvA
- * @Date 2024-10-17
- */
-@Data
-public class NursingPlanVo extends BaseVo {
-    /**
-     * 编号
-     */
-    @ApiModelProperty(value = "编号")
-    private Long id;
+import java.util.List;
 
+@Data
+@ApiModel(description = "护理计划")
+public class NursingPlanVo extends BaseVo {
     /**
      * 排序号
      */
-    @ApiModelProperty(value = "排序号")
+    @ApiModelProperty(value = "护理计划排序号")
     private Integer sortNo;
 
-    /**
-     * 名称
-     */
-    @ApiModelProperty(value = "名称")
+    @ApiModelProperty(value = "护理计划名称")
     private String planName;
 
-    /**
-     * 状态 (0:禁用, 1:启用)
-     */
-    @ApiModelProperty(value = "状态 (0:禁用, 1:启用)")
+
+    @ApiModelProperty(value = "状态（0：禁用，1：启用）")
     private Integer status;
 
+    @ApiModelProperty(value = "护理计划项目计划列表")
+    List<NursingProjectPlanVo> projectPlans;
+
+    @ApiModelProperty(value = "护理等级id")
+    private Long lid;
+
+    @ApiModelProperty(value = "护理等级绑定数量")
     private Integer count;
 }
