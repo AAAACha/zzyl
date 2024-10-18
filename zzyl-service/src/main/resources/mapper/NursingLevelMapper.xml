@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zzyl.mapper.NursingLevelMapper">
+    <insert id="insert">
+        INSERT INTO nursing_level
+        (name, lplan_id, fee, status, description, create_time, create_by, update_by, remark)
+        VALUES
+            (#{name}, #{planId}, #{fee}, #{status}, #{description}, CURRENT_TIMESTAMP, #{createBy}, #{updateBy}, #{remark});
+    </insert>
+    <update id="update">
+        UPDATE nursing_level
+        <set>
+            <!-- 仅当参数不为空时才更新对应字段 -->
+            <if test="name != null">
+                name = #{name},
+            </if>
+            <if test="planId != null">
+                lplan_id = #{planId},
+            </if>
+            <if test="fee != null">
+                fee = #{fee},
+            </if>
+            <if test="status != null">
+                status = #{status},
+            </if>
+            <if test="description != null">
+                description = #{description},
+            </if>
+            <if test="updateBy != null">
+                update_by = #{updateBy},
+            </if>
+            <if test="remark != null">
+                remark = #{remark},
+            </if>
+            update_time = CURRENT_TIMESTAMP
+        </set>
+        WHERE id = #{id}
+    </update>
+    <select id="findByCondition" resultType="com.zzyl.vo.NursingLevelVo">
+        select nl.*,
+        su.real_name creator,
+        np.id planId,
+        np.plan_name planName
+        --       (select count(*) from 中间表 where 中间表.护理项目id=np.id) count
+        from nursing_level nl
+        left join sys_user su on nl.create_by = su.id
+        left join nursing_plan np on nl.lplan_id = np.id
+        <where>
+            <if test="name!=null and name!=''">
+                nl.name like concat('%',#{name},'%')
+            </if>
+            <if test="status!=null">
+                and np.status = #{status}
+            </if>
+        </where>
+        order by nl.update_time asc,nl.create_time desc
+    </select>
+
+
+    <select id="findAll" resultType="com.zzyl.vo.NursingLevelVo">
+        select nl.*,
+               su.real_name creator,
+               np.id planId,
+               np.plan_name planName
+        --       (select count(*) from 中间表 where 中间表.护理项目id=np.id) count
+        from nursing_level nl
+                 left join sys_user su on nl.create_by = su.id
+                 left join nursing_plan np on nl.lplan_id = np.id
+    </select>
+    <select id="selectById" resultType="com.zzyl.vo.NursingLevelVo">
+        select nl.*,
+               su.real_name creator,
+               np.id planId,
+               np.plan_name planName
+        --       (select count(*) from 中间表 where 中间表.护理项目id=np.id) count
+        from nursing_level nl
+                 left join sys_user su on nl.create_by = su.id
+                 left join nursing_plan np on nl.lplan_id = np.id
+            Where nl.id=#{id}
+    </select>
+</mapper>
