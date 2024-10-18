@@ -13,6 +13,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Descriptioin NursingProjectServiceImpl
  * @Author AvA
@@ -92,5 +94,14 @@ public class NursingProjectServiceImpl implements NursingProjectService {
     @Override
     public void updateStatus(int id, int status) {
         nursingProjectMapper.updateStatus(id,status);
+    }
+
+    /**
+     * 查询所有护理项目
+     * @return
+     */
+    @Override
+    public List<NursingProjectVo> selectAll() {
+        return nursingProjectMapper.selectAll();
     }
 }

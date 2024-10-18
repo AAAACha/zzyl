@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 /**
  * @Descriptioin NursingProjectMapper
  * @Author AvA
@@ -38,6 +40,12 @@ public interface NursingProjectMapper {
     NursingProject selectById(Long id);
 
     void update(NursingProject nursingProject);
+
+    /**
+     * 查询所有护理项目
+     * @return
+     */
+    List<NursingProjectVo> selectAll();
 
     /**
      * 根据id删除护理项目
