@@ -2,6 +2,7 @@ package com.zzyl.controller;
 
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
+import com.zzyl.dto.NursingPlanDto;
 import com.zzyl.service.NursingPlanService;
 import com.zzyl.vo.NursingPlanVo;
 import io.swagger.annotations.Api;
@@ -68,5 +69,54 @@ public class NursingPlanController {
     public ResponseResult<NursingPlanVo> getById(@PathVariable("id") Long id){
         NursingPlanVo nursingPlanVo = nursingPlanService.getById(id);
         return ResponseResult.success(nursingPlanVo);
+    }
+
+    /**
+     * 根据id删除护理计划
+     * @param id
+     */
+    @DeleteMapping("/{id}")
+    @ApiOperation("根据id删除护理计划")
+    public ResponseResult deleteById(@PathVariable("id") Long id){
+        nursingPlanService.deleteById(id);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 添加护理计划
+     * @param nursingPlanDto
+     * @return
+     */
+    @PostMapping
+    @ApiOperation("添加护理计划")
+    public ResponseResult addNursingPlan(@RequestBody NursingPlanDto nursingPlanDto){
+        nursingPlanService.add(nursingPlanDto);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 修改护理计划
+     * @param id
+     * @param nursingPlan
+     * @return
+     */
+    @PutMapping("/{id}")
+    @ApiOperation("修改护理计划")
+    public ResponseResult updateNursingPlan(@PathVariable Long id, @RequestBody NursingPlanDto nursingPlan){
+        nursingPlanService.update(nursingPlan);
+        return ResponseResult.success();
+    }
+
+    /**
+     * 启用/禁用护理计划
+     * @param id
+     * @param status
+     * @return
+     */
+    @PutMapping("/{id}/status/{status}")
+    @ApiOperation("启用/禁用护理计划")
+    public ResponseResult enableOrDisable(@PathVariable Long id, @PathVariable Integer status){
+        nursingPlanService.enableOrDisable(id,status);
+        return  ResponseResult.success();
     }
 }

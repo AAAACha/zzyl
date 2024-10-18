@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
 
+import java.util.List;
+
 /**
  * @Descriptioin NursingProjectMapper
  * @Author AvA
@@ -47,4 +49,10 @@ public interface NursingProjectMapper {
 
     @Update("UPDATE nursing_project np set status=#{status} WHERE id=#{id}")
     void updateStatus(int id, int status);
+
+    /**
+     * 查询所有护理项目
+     * @return
+     */
+    List<NursingProjectVo> selectAll();
 }

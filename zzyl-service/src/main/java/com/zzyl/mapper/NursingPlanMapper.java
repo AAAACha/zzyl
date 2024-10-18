@@ -26,12 +26,37 @@ public interface NursingPlanMapper {
      * 护理计划条件分页查询
      * @return
      */
-    Page<NursingPlanVo> page(String name, Integer status);
+    Page<List<NursingPlan>> page(Integer pageNum, Integer pageSize, String name, Integer status);
 
     /**
      * 根据id查询护理计划
      * @param id
      * @return
      */
-    NursingPlan selectById(Long id);
+    NursingPlanVo selectById(Long id);
+
+    /**
+     * 根据id删除护理计划
+     * @param id
+     */
+    void deleteById(Long id);
+
+    /**
+     * 插入护理计划
+     * @param plan
+     */
+    void insert(NursingPlan plan);
+
+    /**
+     * 修改护理计划
+     * @param plan
+     */
+    void update(NursingPlan plan);
+
+    /**
+     * nursingPlanMapper.updateStatus(id, status);
+     * @param id
+     * @param status
+     */
+    void updateStatus(Long id, Integer status);
 }

@@ -88,4 +88,8 @@
         from nursing_project
         where id = #{id}
     </select>
+
+    <select id="selectAll" resultType="com.zzyl.vo.NursingProjectVo">
+        select * from nursing_project
+    </select>
 </mapper>

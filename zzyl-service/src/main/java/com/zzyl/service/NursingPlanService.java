@@ -1,6 +1,7 @@
 package com.zzyl.service;
 
 import com.zzyl.base.PageResponse;
+import com.zzyl.dto.NursingPlanDto;
 import com.zzyl.vo.NursingPlanVo;
 
 import java.util.List;
@@ -33,4 +34,30 @@ public interface NursingPlanService {
      * @return
      */
     NursingPlanVo getById(Long id);
+
+    /**
+     * 根据id删除护理计划
+     * @param id
+     */
+    void deleteById(Long id);
+
+    /**
+     * 添加护理计划
+     * @param nursingPlanDto
+     */
+    void add(NursingPlanDto nursingPlanDto);
+
+
+    /**
+     * 修改护理计划
+     * @param nursingPlan
+     */
+    void update(NursingPlanDto nursingPlan);
+
+    /**
+     * 启用/禁用护理计划
+     * @param id
+     * @param status
+     */
+    void enableOrDisable(Long id, Integer status);
 }
