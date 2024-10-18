@@ -31,7 +31,7 @@
             <result column="project_name" property="projectName"/>
         </collection>
     </resultMap>
-    <insert id="insert" parameterType="com.zzyl.entity.NursingPlan">
+    <insert id="insert" parameterType="com.zzyl.entity.NursingPlan" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO nursing_plan(status, sort_no, plan_name, create_by, update_by, remark, create_time, update_time)
         VALUES (#{status}, #{sortNo}, #{planName}, #{createBy}, #{updateBy}, #{remark}, #{createTime}, #{updateTime});
     </insert>

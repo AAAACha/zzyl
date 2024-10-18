@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 /**
  * @Descriptioin NursingProjectController 护理项目
@@ -84,5 +86,15 @@ public class NursingProjectController {
     public ResponseResult update(@RequestBody NursingProjectDto nursingProjectDto){
         nursingProjectService.update(nursingProjectDto);
         return ResponseResult.success();
+    }
+
+    /**
+     * 查询所有护理项目
+     * @return
+     */
+    @GetMapping("/all")
+    @ApiOperation("查询所有护理项目")
+    public ResponseResult<List<NursingProjectVo>> getAll(){
+        return ResponseResult.success(nursingProjectService.selectAll());
     }
 }

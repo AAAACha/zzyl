@@ -78,15 +78,14 @@ public class NursingPlanServiceImpl implements NursingPlanService {
 
     /**
      * 添加护理计划
-     * @param nursingPlanDto
+     * @param nursingPlan
      */
     @Override
-    public void add(NursingPlanDto nursingPlanDto) {
-        NursingPlan plan = BeanUtil.toBean(nursingPlanDto, NursingPlan.class);
+    public void add(NursingPlanDto nursingPlan) {
+        NursingPlan plan = BeanUtil.toBean(nursingPlan, NursingPlan.class);
         plan.setStatus(1);
         nursingPlanMapper.insert(plan);
-        List<NursingProjectPlanDto> projectPlans = nursingPlanDto.getProjectPlans();
-        projectPlans.forEach(value -> value.setPlanId(plan.getId()));
-        nursingProjectPlanService.addList(nursingPlanDto.getProjectPlans());
+        nursingPlan.getProjectPlans().forEach(v -> v.setPlanId(plan.getId()));
+        nursingProjectPlanService.addList(nursingPlan.getProjectPlans());
     }
 }

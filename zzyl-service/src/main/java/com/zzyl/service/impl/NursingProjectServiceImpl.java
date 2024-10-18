@@ -13,6 +13,8 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @Descriptioin NursingProjectServiceImpl
  * @Author AvA
@@ -79,5 +81,14 @@ public class NursingProjectServiceImpl implements NursingProjectService {
         NursingProject nursingProject = new NursingProject();
         BeanUtils.copyProperties(nursingProjectDto,nursingProject);
         nursingProjectMapper.update(nursingProject);
+    }
+
+    /**
+     * 查询所有护理项目
+     * @return
+     */
+    @Override
+    public List<NursingProjectVo> selectAll() {
+        return nursingProjectMapper.selectAll();
     }
 }

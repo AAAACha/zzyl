@@ -4,6 +4,8 @@ import com.zzyl.base.PageResponse;
 import com.zzyl.dto.NursingProjectDto;
 import com.zzyl.vo.NursingProjectVo;
 
+import java.util.List;
+
 /**
  * @Descriptioin NursingProjectService
  * @Author AvA
@@ -39,4 +41,10 @@ public interface NursingProjectService {
      * @param nursingProjectDto
      */
     void update(NursingProjectDto nursingProjectDto);
+
+    /**
+     * 查询所有护理项目
+     * @return
+     */
+    List<NursingProjectVo> selectAll();
 }
