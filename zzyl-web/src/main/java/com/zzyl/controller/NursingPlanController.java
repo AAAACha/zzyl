@@ -8,10 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -32,7 +29,7 @@ public class NursingPlanController {
      * 查询所有护理计划
      * @return
      */
-    @GetMapping("/all")
+    @GetMapping
     @ApiOperation("查询所有护理项目")
     public ResponseResult<List<NursingPlanVo>> getAllNursingPlans(){
         List<NursingPlanVo> nursingPlanVoList = nursingPlanService.getAllNursingPlans();
@@ -47,7 +44,7 @@ public class NursingPlanController {
      * @param pageSize
      * @return
      */
-    @GetMapping("search")
+    @GetMapping("/search")
     @ApiOperation("护理计划条件分页查询")
     public ResponseResult<PageResponse<NursingPlanVo>> page(
             @ApiParam(value = "护理计划名称") String name,
@@ -59,5 +56,17 @@ public class NursingPlanController {
     ){
         PageResponse<NursingPlanVo> nursingPlanPageInfo = nursingPlanService.page(name,status,pageNum,pageSize);
         return ResponseResult.success(nursingPlanPageInfo);
+    }
+
+    /**
+     * 根据id查询护理计划
+     * @param id
+     * @return
+     */
+    @GetMapping("/{id}")
+    @ApiOperation("根据id查询护理计划")
+    public ResponseResult<NursingPlanVo> getById(@PathVariable("id") Long id){
+        NursingPlanVo nursingPlanVo = nursingPlanService.getById(id);
+        return ResponseResult.success(nursingPlanVo);
     }
 }

@@ -26,4 +26,11 @@ public interface NursingPlanService {
      * @return
      */
     PageResponse<NursingPlanVo> page(String name, Integer status, Integer pageNum, Integer pageSize);
+
+    /**
+     * 根据id查询护理计划
+     * @param id
+     * @return
+     */
+    NursingPlanVo getById(Long id);
 }

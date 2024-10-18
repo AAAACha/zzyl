@@ -2,12 +2,14 @@ package com.zzyl.vo;
 
 import com.zzyl.base.BaseVo;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
 /**
  * @Descriptioin NursingPlanVo
  * @Author AvA
  * @Date 2024-10-17
  */
+@Data
 public class NursingPlanVo extends BaseVo {
     /**
      * 编号
@@ -32,4 +34,6 @@ public class NursingPlanVo extends BaseVo {
      */
     @ApiModelProperty(value = "状态 (0:禁用, 1:启用)")
     private Integer status;
+
+    private Integer count;
 }
