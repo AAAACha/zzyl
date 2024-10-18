@@ -70,18 +70,22 @@
 
 
     <select id="selectByPage" resultMap="nursingProjectResultMap">
-        select p.*,su.real_name as creator
-        from nursing_project p left join sys_user su on p.create_by = su.id
+        select np.*,
+        su.real_name creator,
+        (select count(*) from nursing_project_plan npp where npp.project_id=np.id) count
+        from nursing_project np
+        left join sys_user su on np.create_by = su.id
         <where>
-            <if test="name != null and name != ''">
-                and name like concat('%',#{name},'%')
+            <if test="name!=null and name!=''">
+                np.name like concat('%',#{name},'%')
             </if>
-            <if test="status != null">
-                and status = #{status}
+            <if test="status!=null">
+                and np.status = #{status}
             </if>
         </where>
-        order by order_no, create_time desc
+        order by np.order_no asc,np.create_time desc
     </select>
+
     <select id="selectById"
             resultType="com.zzyl.entity.NursingProject">
         select *
