@@ -37,4 +37,13 @@ public class NursingProjectPlanServiceImpl implements NursingProjectPlanService 
         List<NursingProjectPlan> projectPlanList = projectPlans.stream().map(v -> BeanUtil.toBean(v, NursingProjectPlan.class)).collect(Collectors.toList());
         return nursingProjectPlanMapper.insertList(projectPlanList);
     }
+
+    /**
+     * 根据Id批量删除
+     * @param ids
+     */
+    @Override
+    public int deleteByIds(List<Long> ids) {
+        return nursingProjectPlanMapper.deleteByIds(ids);
+    }
 }

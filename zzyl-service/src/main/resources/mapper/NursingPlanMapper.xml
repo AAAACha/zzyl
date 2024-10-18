@@ -36,6 +36,16 @@
         VALUES (#{status}, #{sortNo}, #{planName}, #{createBy}, #{updateBy}, #{remark}, #{createTime}, #{updateTime});
     </insert>
 
+    <update id="update" parameterType="com.zzyl.entity.NursingPlan">
+        update nursing_plan
+        set plan_name = #{planName},
+            update_time = #{updateTime},
+            update_by = #{updateBy},
+            status = #{status},
+            sort_no = #{sortNo}
+        where id = #{id};
+    </update>
+
     <delete id="deleteById">
         delete
         from nursing_plan

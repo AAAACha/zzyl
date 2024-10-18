@@ -46,4 +46,10 @@ public interface NursingPlanMapper {
      * @param plan
      */
     void insert(NursingPlan plan);
+
+    /**
+     * 修改护理计划
+     * @param plan
+     */
+    void update(NursingPlan plan);
 }

@@ -93,4 +93,17 @@ public class NursingPlanController {
         nursingPlanService.add(nursingPlanDto);
         return ResponseResult.success();
     }
+
+    /**
+     * 修改护理计划
+     * @param id
+     * @param nursingPlan
+     * @return
+     */
+    @PutMapping("/{id}")
+    @ApiOperation("修改护理计划")
+    public ResponseResult updateNursingPlan(@PathVariable Long id, @RequestBody NursingPlanDto nursingPlan){
+        nursingPlanService.update(nursingPlan);
+        return ResponseResult.success();
+    }
 }

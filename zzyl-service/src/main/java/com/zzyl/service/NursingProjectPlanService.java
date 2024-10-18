@@ -19,4 +19,10 @@ public interface NursingProjectPlanService {
 
 
     int addList(List<NursingProjectPlanDto> projectPlans);
+
+    /**
+     * 根据Id批量删除
+     * @param ids
+     */
+    int deleteByIds(List<Long> ids);
 }

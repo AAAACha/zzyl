@@ -22,4 +22,10 @@ public interface NursingProjectPlanMapper {
 
 
     int insertList(List<NursingProjectPlan> projectPlanList);
+
+    /**
+     * 根据Id批量删除
+     * @param ids
+     */
+    int deleteByIds(List<Long> ids);
 }
