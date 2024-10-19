@@ -42,6 +42,21 @@ public interface NursingProjectMapper {
     void update(NursingProject nursingProject);
 
     /**
+     * 根据id删除护理项目
+     * @param id
+     */
+    void deleteProjectById(Long id);
+
+    @Update("UPDATE nursing_project np set status=#{status} WHERE id=#{id}")
+    void updateStatus(int id, int status);
+
+    /**
+     * 查询所有护理项目
+     * @return
+     */
+    List<NursingProjectVo> selectAll();
+
+    /**
      * 查询所有护理项目
      * @return
      */
