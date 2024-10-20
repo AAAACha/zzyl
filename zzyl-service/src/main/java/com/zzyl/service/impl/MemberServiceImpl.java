@@ -12,7 +12,6 @@ import com.zzyl.utils.JwtUtil;
 import com.zzyl.utils.ObjectUtil;
 import com.zzyl.utils.StringUtils;
 import com.zzyl.vo.LoginVo;
-import org.codehaus.janino.Token;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
