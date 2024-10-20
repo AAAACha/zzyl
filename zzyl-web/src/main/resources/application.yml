@@ -64,3 +64,6 @@ zzyl:
       accessKeyId: LTAI5t9Sy42dJ5f1cfEddF4K
       accessKeySecret: nGKplkgdVLF1EwxFXkO3Pk5HdjIRMv
       bucketName: myonly-test
+  wechat:
+    appId: wx80d1d2a430f00ca2
+    appSecret: 1bf9f7bd9226e1752d2bdcd9eeb74f8c
