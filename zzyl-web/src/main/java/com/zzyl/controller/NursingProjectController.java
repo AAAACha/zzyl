@@ -118,23 +118,4 @@ public class NursingProjectController extends BaseController{
         nursingProjectService.updateStatus(id,status);
         return success();
     }
-    @PutMapping("/{id}/status/{status}")
-    @ApiOperation("jinyongqiyomg")
-    public ResponseResult updateStatus(
-            @PathVariable int id,
-            @PathVariable int status
-            ){
-        nursingProjectService.updateStatus(id,status);
-        return success();
-    }
-
-    /**
-     * 查询所有护理项目
-     * @return
-     */
-    @GetMapping("/all")
-    @ApiOperation("查询所有护理项目")
-    public ResponseResult<List<NursingProjectVo>> getAll(){
-        return ResponseResult.success(nursingProjectService.selectAll());
-    }
 }
