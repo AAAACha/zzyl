@@ -19,9 +19,14 @@
         <result column="creator" property="creator"/>
     </resultMap>
 
+    <insert id="addReservation" parameterType="com.zzyl.entity.Reservation" useGeneratedKeys="true" keyProperty="id">
+        insert into reservation (name, mobile, time, visitor, type, status, create_time, create_by, remark)
+        values (#{name}, #{mobile}, #{time}, #{visitor}, #{type}, #{status}, #{createTime}, #{createBy}, #{remark})
+    </insert>
+
     <select id="getCancellationsCount" resultType="java.lang.Integer">
         select count(*) from reservation
-        where update_time between  #{startTime} and #{endTIme}
+        where update_time between  #{startTime} and #{endTime}
         and status = 2
         and update_by = #{updateBy}
     </select>

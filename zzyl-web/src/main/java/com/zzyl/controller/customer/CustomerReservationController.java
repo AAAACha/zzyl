@@ -4,6 +4,8 @@ import cn.hutool.core.date.LocalDateTimeUtil;
 import cn.hutool.core.util.ObjectUtil;
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
+import com.zzyl.dto.ReservationDto;
+import com.zzyl.mapper.CustomerReservationMapper;
 import com.zzyl.service.CustomerReservationService;
 import com.zzyl.utils.UserThreadLocal;
 import com.zzyl.vo.ReservationVo;
@@ -13,10 +15,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.zzyl.base.ResponseResult.success;
 
@@ -38,7 +37,7 @@ public class CustomerReservationController {
      * 查询取消预约数量
      * @return
      */
-    @GetMapping
+    @GetMapping("/cancelled-count")
     @ApiOperation("查询取消预约数量")
     public ResponseResult<Integer> getCancellationsCount(){
 
@@ -82,5 +81,17 @@ public class CustomerReservationController {
                                                                   @RequestParam(required = false) Long endTime) {
         PageResponse<ReservationVo> byPage = customerReservationService.findByPage(pageNum, pageSize, name, phone, status, type, ObjectUtil.isEmpty(startTime)? null : LocalDateTimeUtil.of(startTime), ObjectUtil.isEmpty(endTime)? null : LocalDateTimeUtil.of(endTime));
         return success(byPage);
+    }
+
+    /**
+     * 新增预约
+     * @param reservationDto
+     * @return
+     */
+    @PostMapping()
+    @ApiOperation("新增预约")
+    public ResponseResult addReservation(@RequestBody ReservationDto reservationDto){
+        customerReservationService.addReservation(reservationDto);
+        return success();
     }
 }

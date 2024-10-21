@@ -1,6 +1,7 @@
 package com.zzyl.service;
 
 import com.zzyl.base.PageResponse;
+import com.zzyl.dto.ReservationDto;
 import com.zzyl.vo.ReservationVo;
 
 import java.time.LocalDateTime;
@@ -32,4 +33,9 @@ public interface CustomerReservationService {
      * @return
      */
     PageResponse<ReservationVo> findByPage(int pageNum, int pageSize, String name, String phone, Integer status, Integer type, LocalDateTime localDateTime, LocalDateTime localDateTime1);
+
+    /**
+     * 新增预约
+     */
+    void addReservation(ReservationDto reservationDto);
 }

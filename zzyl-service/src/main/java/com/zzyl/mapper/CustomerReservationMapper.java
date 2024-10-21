@@ -16,6 +16,11 @@ import java.time.LocalDateTime;
 public interface CustomerReservationMapper {
 
     /**
+     * 新增预约
+     */
+    void addReservation(Reservation reservation);
+
+    /**
      * 查询取消预约数量
      * @param startTime
      * @param endTime
@@ -38,4 +43,6 @@ public interface CustomerReservationMapper {
      * @return
      */
     Page<Reservation> findByPage(@Param("page") int startIndex, @Param("pageSize") int pageSize, @Param("name") String name, @Param("mobile") String mobile, @Param("status") Integer status, @Param("type") Integer type, @Param("createBy") Long userId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
+
+
 }
