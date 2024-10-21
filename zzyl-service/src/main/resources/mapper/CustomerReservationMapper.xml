@@ -25,4 +25,31 @@
         and status = 2
         and update_by = #{updateBy}
     </select>
+
+    <select id="findByPage" parameterType="java.util.Map" resultType="com.zzyl.entity.Reservation">
+        select r.id, r.name, r.mobile, r.time, r.visitor, r.type, r.status, r.create_by, r.remark, r.create_time, s.name
+        as creator from reservation r
+        LEFT JOIN member s ON r.create_by = s.id
+        <where>
+            <if test="name != null and name != ''">
+                and r.name like concat('%',#{name},'%')
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and r.mobile = #{mobile}
+            </if>
+            <if test="status != null">
+                and r.status = #{status, jdbcType=INTEGER}
+            </if>
+            <if test="type != null">
+                and r.type = #{type, jdbcType=INTEGER}
+            </if>
+            <if test="createBy != null">
+                AND r.create_by = #{createBy}
+            </if>
+            <if test="startTime != null and endTime != null">
+                AND r.time BETWEEN #{startTime} AND #{endTime}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
 </mapper>
