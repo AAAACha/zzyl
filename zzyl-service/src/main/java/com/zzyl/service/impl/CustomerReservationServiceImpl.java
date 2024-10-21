@@ -12,11 +12,13 @@ import com.zzyl.mapper.CustomerReservationMapper;
 import com.zzyl.service.CustomerReservationService;
 import com.zzyl.utils.UserThreadLocal;
 import com.zzyl.vo.ReservationVo;
+import com.zzyl.vo.TimeCountVo;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Descriptioin CustomerReservationServiceImpl
@@ -83,6 +85,31 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
             customerReservationMapper.addReservation(reservation);
         } catch (Exception e) {
             throw new BaseException(BasicEnum.TIME_ALREADY_RESERVATED_BY_PHONE);
+        }
+    }
+
+    /**
+     * 查询每个时间段剩余预约次数
+     * @param time
+     * @return
+     */
+    @Override
+    public List<TimeCountVo> countReservationsForEachTimeWithinTimeRange(LocalDateTime time) {
+        LocalDateTime endTime = time.plusHours(24);
+
+        return customerReservationMapper.countReservationsForEachTimeWithinTimeRange(time,endTime);
+    }
+
+    /**
+     * 取消预约
+     * @param id
+     */
+    @Override
+    public void canceltReservation(Long id) {
+        Reservation reservation = customerReservationMapper.findById(id);
+        if(reservation != null){
+            reservation.setStatus(ReservationStatus.CANCELED.getOrdinal());
+            customerReservationMapper.update(reservation);
         }
     }
 }

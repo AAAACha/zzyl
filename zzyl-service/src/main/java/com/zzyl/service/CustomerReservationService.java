@@ -3,8 +3,10 @@ package com.zzyl.service;
 import com.zzyl.base.PageResponse;
 import com.zzyl.dto.ReservationDto;
 import com.zzyl.vo.ReservationVo;
+import com.zzyl.vo.TimeCountVo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @Descriptioin CustomerReservationService
@@ -38,4 +40,17 @@ public interface CustomerReservationService {
      * 新增预约
      */
     void addReservation(ReservationDto reservationDto);
+
+    /**
+     * 查询每个时间段剩余预约次数
+     * @param time
+     * @return
+     */
+    List<TimeCountVo> countReservationsForEachTimeWithinTimeRange(LocalDateTime time);
+
+    /**
+     * 取消预约
+     * @param id
+     */
+    void canceltReservation(Long id);
 }

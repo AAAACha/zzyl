@@ -24,6 +24,19 @@
         values (#{name}, #{mobile}, #{time}, #{visitor}, #{type}, #{status}, #{createTime}, #{createBy}, #{remark})
     </insert>
 
+    <update id="update" parameterType="com.zzyl.entity.Reservation">
+        update reservation
+        set name        = #{name},
+            mobile      = #{mobile},
+            time        = #{time},
+            visitor     = #{visitor},
+            type        = #{type},
+            status      = #{status},
+            update_time = #{updateTime},
+            update_by   = #{updateBy}
+        where id = #{id}
+    </update>
+
     <select id="getCancellationsCount" resultType="java.lang.Integer">
         select count(*) from reservation
         where update_time between  #{startTime} and #{endTime}
@@ -56,5 +69,19 @@
             </if>
         </where>
         order by create_time desc
+    </select>
+    <select id="countReservationsForEachTimeWithinTimeRange"
+            resultType="com.zzyl.vo.TimeCountVo">
+        select time, 6-count(*) as count
+        from reservation
+        where time between  #{startTime} and #{endTime}
+        and status != 2
+        group by time
+    </select>
+
+    <select id="findById" resultType="com.zzyl.entity.Reservation">
+        select *
+        from reservation
+        where id = #{id}
     </select>
 </mapper>

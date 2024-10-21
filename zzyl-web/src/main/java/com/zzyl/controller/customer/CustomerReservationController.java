@@ -9,6 +9,7 @@ import com.zzyl.mapper.CustomerReservationMapper;
 import com.zzyl.service.CustomerReservationService;
 import com.zzyl.utils.UserThreadLocal;
 import com.zzyl.vo.ReservationVo;
+import com.zzyl.vo.TimeCountVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -16,6 +17,8 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.zzyl.base.ResponseResult.success;
 
@@ -92,6 +95,32 @@ public class CustomerReservationController {
     @ApiOperation("新增预约")
     public ResponseResult addReservation(@RequestBody ReservationDto reservationDto){
         customerReservationService.addReservation(reservationDto);
+        return success();
+    }
+
+    /**
+     * 查询每个时间段剩余预约次数
+     * @param time
+     * @return
+     */
+    @GetMapping("/countByTime")
+    @ApiOperation("查询每个时间段剩余预约次数")
+    public ResponseResult countReservationsForEachTimeWithinTimeRange (@RequestParam Long time){
+        List<TimeCountVo> list = customerReservationService.countReservationsForEachTimeWithinTimeRange(LocalDateTimeUtil.of(time));
+
+        return success(list);
+    }
+
+    /**
+     * 取消预约
+     * @param id
+     * @return
+     */
+    @PutMapping("/{id}/cancel")
+    @ApiOperation("取消预约")
+    public ResponseResult canceltReservation(@PathVariable Long id){
+        customerReservationService.canceltReservation(id);
+
         return success();
     }
 }
