@@ -5,7 +5,6 @@ import cn.hutool.core.util.ObjectUtil;
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
 import com.zzyl.dto.ReservationDto;
-import com.zzyl.mapper.CustomerReservationMapper;
 import com.zzyl.service.CustomerReservationService;
 import com.zzyl.utils.UserThreadLocal;
 import com.zzyl.vo.ReservationVo;

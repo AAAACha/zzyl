@@ -53,4 +53,6 @@ public interface CustomerReservationService {
      * @param id
      */
     void canceltReservation(Long id);
+
+    void updateReservationStatus(LocalDateTime now);
 }

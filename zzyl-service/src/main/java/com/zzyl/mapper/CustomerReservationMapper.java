@@ -5,6 +5,7 @@ import com.zzyl.entity.Reservation;
 import com.zzyl.vo.TimeCountVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -48,11 +49,11 @@ public interface CustomerReservationMapper {
 
     /**
      * 查询每个时间段剩余预约次数
-     * @param time
+     * @param startTime
      * @param endTime
      * @return
      */
-    List<TimeCountVo> countReservationsForEachTimeWithinTimeRange(LocalDateTime time, LocalDateTime endTime);
+    List<TimeCountVo> countReservationsForEachTimeWithinTimeRange(@Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
 
     /**根据Id查找预约信息
      *
@@ -66,4 +67,7 @@ public interface CustomerReservationMapper {
      * @param reservation
      */
     void update(Reservation reservation);
+
+    @Update("update reservation set status = 3 where status = 0 and time <= #{minusDays}")
+    void updateReservationStatus(LocalDateTime minusDays);
 }

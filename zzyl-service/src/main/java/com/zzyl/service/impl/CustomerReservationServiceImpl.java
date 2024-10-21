@@ -112,4 +112,10 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
             customerReservationMapper.update(reservation);
         }
     }
+
+    @Override
+    public void updateReservationStatus(LocalDateTime now) {
+        now = now.minusHours(1);
+        customerReservationMapper.updateReservationStatus(now);
+    }
 }

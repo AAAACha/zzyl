@@ -39,9 +39,9 @@
 
     <select id="getCancellationsCount" resultType="java.lang.Integer">
         select count(*) from reservation
-        where update_time between  #{startTime} and #{endTime}
+        where create_time between  #{startTime} and #{endTime}
         and status = 2
-        and update_by = #{updateBy}
+        and create_by = #{updateBy}
     </select>
 
     <select id="findByPage" parameterType="java.util.Map" resultType="com.zzyl.entity.Reservation">
@@ -56,10 +56,10 @@
                 and r.mobile = #{mobile}
             </if>
             <if test="status != null">
-                and r.status = #{status, jdbcType=INTEGER}
+                and r.status = #{status}
             </if>
             <if test="type != null">
-                and r.type = #{type, jdbcType=INTEGER}
+                and r.type = #{type}
             </if>
             <if test="createBy != null">
                 AND r.create_by = #{createBy}
@@ -70,6 +70,7 @@
         </where>
         order by create_time desc
     </select>
+
     <select id="countReservationsForEachTimeWithinTimeRange"
             resultType="com.zzyl.vo.TimeCountVo">
         select time, 6-count(*) as count
