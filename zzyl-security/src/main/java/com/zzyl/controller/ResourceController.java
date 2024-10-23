@@ -13,10 +13,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -55,5 +52,20 @@ public class ResourceController {
         TreeVo treeVo = resourceService.resourceTreeVo(resourceDto);
 
         return ResponseResult.success(treeVo);
+    }
+
+    @PutMapping
+    @ApiOperation(value = "资源添加", notes = "资源添加")
+    @ApiImplicitParam(name = "resourceDto", value = "资源DTO对象", required = true, dataType = "ResourceDto")
+    @ApiOperationSupport(includeParameters = {"resourceDto.dataState"
+            , "resourceDto.icon"
+            , "resourceDto.parentResourceNo"
+            , "resourceDto.requestPath"
+            , "resourceDto.resourceName"
+            , "resourceDto.resourceType"
+            , "resourceDto.sortNo"})
+    public ResponseResult<ResourceVo> createResource(@RequestBody ResourceDto resourceDto){
+        resourceService.createResource(resourceDto);
+        return ResponseResult.success();
     }
 }

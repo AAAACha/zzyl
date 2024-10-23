@@ -5,6 +5,7 @@ import com.zzyl.entity.Resource;
 import com.zzyl.vo.ResourceVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -38,4 +39,7 @@ public interface ResourceMapper {
      * @return
      */
     List<ResourceVo> findByCondition(ResourceDto resourceDto);
+
+    @Select("select * from sys_resource where resource_no = #{parentResourceNo}")
+    Resource selectByParentResourceNo(String parentResourceNo);
 }

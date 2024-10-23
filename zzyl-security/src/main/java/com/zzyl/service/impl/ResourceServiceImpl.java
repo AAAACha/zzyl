@@ -7,10 +7,13 @@ import cn.hutool.core.lang.tree.TreeUtil;
 import com.zzyl.constant.SuperConstant;
 import com.zzyl.dto.ResourceDto;
 import com.zzyl.entity.Resource;
+import com.zzyl.enums.BasicEnum;
+import com.zzyl.exception.BaseException;
 import com.zzyl.mapper.ResourceMapper;
 import com.zzyl.service.ResourceService;
 import com.zzyl.utils.EmptyUtil;
 import com.zzyl.utils.NoProcessing;
+import com.zzyl.utils.ObjectUtil;
 import com.zzyl.vo.ResourceVo;
 import com.zzyl.vo.TreeItemVo;
 import com.zzyl.vo.TreeVo;
@@ -18,7 +21,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @Descriptioin ResourceServiceImpl
@@ -76,5 +81,37 @@ public class ResourceServiceImpl implements ResourceService {
         return TreeVo.builder()
                 .items(items)
                 .build();
+    }
+
+    @Override
+    public void createResource(ResourceDto resourceDto) {
+        Resource resource = BeanUtil.toBean(resourceDto, Resource.class);
+        Resource parentResourceNo =  resourceMapper.selectByParentResourceNo(resource.getParentResourceNo());
+        resource.setDataState(parentResourceNo.getDataState());
+
+        String resourceNo = createResourceNo(resource);
+        resource.setResourceNo(resourceNo);
+
+        resourceMapper.insert(resource);
+    }
+
+    private String createResourceNo(Resource resource) {
+        if(resource.getResourceType().equals("m") &&
+                NoProcessing.processString(resource.getParentResourceNo()).length() / 3 > 4){
+            throw new BaseException(BasicEnum.RESOURCE_DEPTH_UPPER_LIMIT);
+        }
+
+        ResourceDto dto = ResourceDto.builder().parentResourceNo(resource.getParentResourceNo()).build();
+        List<ResourceVo> resourceVoList = resourceMapper.findByCondition(dto);
+
+        if(ObjectUtil.isNotEmpty(resourceVoList)){
+            List<String> resourceNoList = resourceVoList.stream().map(ResourceVo::getResourceNo).collect(Collectors.toList());
+
+            Long maxResourceNo = resourceNoList.stream().map(i -> Long.valueOf(i)).max(Comparator.comparing(i -> i)).get();
+
+            return NoProcessing.createNo(maxResourceNo.toString(),true);
+        } else {
+            return NoProcessing.createNo(resource.getParentResourceNo(),false);
+        }
     }
 }

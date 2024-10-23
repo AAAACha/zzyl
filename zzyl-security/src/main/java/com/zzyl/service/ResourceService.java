@@ -21,4 +21,6 @@ public interface ResourceService {
     List<ResourceVo> findResourceList(ResourceDto resourceDto);
 
     TreeVo resourceTreeVo(ResourceDto resourceDto);
+
+    void createResource(ResourceDto resourceDto);
 }
