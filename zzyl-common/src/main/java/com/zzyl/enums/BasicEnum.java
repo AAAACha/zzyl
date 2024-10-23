@@ -41,6 +41,9 @@ public enum BasicEnum implements IBasicEnum {
     GET_OPENID_ERROR(1417, "小程序登录，获取openId失败"),
     GET_PHONE_ERROR(1418, "小程序登录，获取手机号失败"),
     GET_TOKEN_ERROR(1419, "小程序登录，获取token失败"),
+    UPDATE_RESOURCE_FAILED(1420, "更新资源失败"),
+    CONTAINS_CHILD_RESOURCE_DELETE_FAILED(1421, "包含子菜单,不允许删除"),
+    RESOURCE_ENABLE_DELETE_FAILED(1421, "菜单启用中,不允许删除"),
 
 
     //业务相关异常：1500-1599

@@ -143,4 +143,34 @@ public class ResourceServiceImpl implements ResourceService {
         Resource resource = BeanUtil.toBean(resourceDto, Resource.class);
         resourceMapper.updateByPrimaryKeySelective(resource);
     }
+
+    @Override
+    public void deleteByResourceNo(String resourceNo) {
+        if (hasChildByMenuId(resourceNo)) {
+            throw new BaseException(BasicEnum.CONTAINS_CHILD_RESOURCE_DELETE_FAILED);
+        }
+
+        Resource resource = resourceMapper.getResourceByResourceNo(resourceNo);
+
+        if (resource == null || resource.getDataState().equals(SuperConstant.DATA_STATE_0)) {
+            throw new BaseException(BasicEnum.RESOURCE_ENABLE_DELETE_FAILED);
+        }
+
+        resourceMapper.deleteByResourceNo(resourceNo);
+    }
+
+    /**
+     * 查询是否有子菜单
+     *
+     * @param resourceNo 资源编号
+     * @return
+     */
+    public boolean hasChildByMenuId(String resourceNo) {
+        //1、调用Mapper进行查询是否有子菜单
+        int result = resourceMapper.hasChildByMenuId(resourceNo);
+
+        //2、将查询结果返回
+        return result > 0 ? true : false;
+
+    }
 }

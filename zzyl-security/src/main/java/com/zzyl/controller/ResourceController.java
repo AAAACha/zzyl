@@ -116,4 +116,19 @@ public class ResourceController {
         //3、将修改结果返回给前端
         return ResponseResult.success();
     }
+
+    /**
+     * 删除菜单
+     * @param resourceNo
+     * @return
+     */
+    @DeleteMapping("/{resourceNo}")
+    @ApiOperation("删除菜单")
+    public ResponseResult deleteResource(@PathVariable("resourceNo") String resourceNo) {
+        log.info("要删除的资源编号为:{}",resourceNo);
+
+        resourceService.deleteByResourceNo(resourceNo);
+
+        return ResponseResult.success();
+    }
 }

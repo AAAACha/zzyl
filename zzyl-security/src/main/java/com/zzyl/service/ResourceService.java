@@ -27,4 +27,6 @@ public interface ResourceService {
     void enableOrDisable(ResourceDto resourceDto);
 
     void updateResource(ResourceDto resourceDto);
+
+    void deleteByResourceNo(String resourceNo);
 }

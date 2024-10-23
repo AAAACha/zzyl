@@ -64,4 +64,8 @@ public interface ResourceMapper {
      * @param dataState     资源状态
      */
     void updateByParentResourceNo(@Param("resourceNo") String resourceNo, @Param("dataState") String dataState);
+
+    void deleteByResourceNo(String resourceNo);
+
+    int hasChildByMenuId(@Param("resourceNo")String resourceNo);
 }
