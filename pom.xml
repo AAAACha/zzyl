@@ -11,6 +11,7 @@
     <description>智慧养老项目--中州养老</description>
     <modules>
         <module>zzyl-common</module>
+        <module>zzyl-security</module>
         <module>zzyl-service</module>
         <module>zzyl-web</module>
     </modules>
@@ -181,6 +182,12 @@
             <dependency>
                 <groupId>com.zzyl</groupId>
                 <artifactId>zzyl-common</artifactId>
+                <version>${retirement.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.zzyl</groupId>
+                <artifactId>zzyl-security</artifactId>
                 <version>${retirement.version}</version>
             </dependency>
 
