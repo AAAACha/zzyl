@@ -2,6 +2,7 @@ package com.zzyl.mapper;
 
 import com.zzyl.dto.ResourceDto;
 import com.zzyl.entity.Resource;
+import com.zzyl.vo.ResourceVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,4 +32,10 @@ public interface ResourceMapper {
      */
     int batchInsert(@Param("list") List<Resource> list);
 
+    /**
+     * 资源列表查询
+     * @param resourceDto
+     * @return
+     */
+    List<ResourceVo> findByCondition(ResourceDto resourceDto);
 }
