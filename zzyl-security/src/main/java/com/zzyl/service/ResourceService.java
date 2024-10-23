@@ -2,6 +2,7 @@ package com.zzyl.service;
 
 import com.zzyl.dto.ResourceDto;
 import com.zzyl.vo.ResourceVo;
+import com.zzyl.vo.TreeVo;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface ResourceService {
      * @return
      */
     List<ResourceVo> findResourceList(ResourceDto resourceDto);
+
+    TreeVo resourceTreeVo(ResourceDto resourceDto);
 }
