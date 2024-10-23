@@ -25,4 +25,6 @@ public interface ResourceService {
     Boolean createResource(ResourceDto resourceDto);
 
     void enableOrDisable(ResourceDto resourceDto);
+
+    void updateResource(ResourceDto resourceDto);
 }

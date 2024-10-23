@@ -137,4 +137,10 @@ public class ResourceServiceImpl implements ResourceService {
         resourceMapper.updateByParentResourceNo(NoProcessing.processString(resourceNo), //更新前对子资源进行处理自动补全
                 resource.getDataState());
     }
+
+    @Override
+    public void updateResource(ResourceDto resourceDto) {
+        Resource resource = BeanUtil.toBean(resourceDto, Resource.class);
+        resourceMapper.updateByPrimaryKeySelective(resource);
+    }
 }

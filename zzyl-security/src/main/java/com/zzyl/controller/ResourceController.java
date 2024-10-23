@@ -69,6 +69,11 @@ public class ResourceController {
         return ResponseResult.success(flag);
     }
 
+    /**
+     * 启用禁用
+     * @param resourceDto
+     * @return
+     */
     @PostMapping("/enable")
     @ApiOperation(value = "启用禁用", notes = "启用/禁用")
     @ApiImplicitParam(name = "resourceVo", value = "资源Vo对象", required = true, dataType = "ResourceVo")
@@ -76,8 +81,39 @@ public class ResourceController {
             "resourceVo.parentResourceNo",
             "resourceVo.resourceNo"})
     public ResponseResult enableOrDisable(@RequestBody ResourceDto resourceDto){
+        log.info("当前资源为：{},要修改的状态为: {}", resourceDto, resourceDto.getDataState());
+
         resourceService.enableOrDisable(resourceDto);
 
+        return ResponseResult.success();
+    }
+
+    /**
+     * 资源修改
+     *
+     * @param resourceDto 资源DTO对象
+     * @return
+     */
+    @PatchMapping
+    @ApiOperation(value = "资源修改", notes = "资源修改")
+    @ApiImplicitParam(name = "resourceDto", value = "资源DTO对象", required = true, dataType = "ResourceDto")
+    @ApiOperationSupport(includeParameters = {
+            "resourceDto.id",
+            "resourceDto.dataState",
+            "resourceDto.icon",
+            "resourceDto.parentResourceNo",
+            "resourceDto.requestPath",
+            "resourceDto.resourceName",
+            "resourceDto.resourceType",
+            "resourceDto.sortNo"})
+    public ResponseResult<Boolean> updateResource(@RequestBody ResourceDto resourceDto) {
+        //1、日志
+        log.info("资源修改，{}", resourceDto);
+
+        //2、调用service进行修改
+        resourceService.updateResource(resourceDto);
+
+        //3、将修改结果返回给前端
         return ResponseResult.success();
     }
 }
