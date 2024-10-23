@@ -117,4 +117,20 @@ public class HttpUtilTest {
             System.out.println(response.body());
         }
     }
+
+    @Test
+    public void test(){
+        String resourceNo = "100001006000000";
+        int step = resourceNo.length()/3;
+        int supplement = 0;
+        for (int i = 0; i < step; i++){
+            String targetString = resourceNo.substring(resourceNo.length()-3,resourceNo.length());
+            if("000".equals(targetString)){
+                resourceNo = resourceNo.substring(0,resourceNo.length()-3);
+                supplement++;
+            } else {
+                break;
+            }
+        }
+    }
 }

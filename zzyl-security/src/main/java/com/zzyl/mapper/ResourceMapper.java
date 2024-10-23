@@ -42,4 +42,26 @@ public interface ResourceMapper {
 
     @Select("select * from sys_resource where resource_no = #{parentResourceNo}")
     Resource selectByParentResourceNo(String parentResourceNo);
+
+
+    /**
+     * 根据资源编号查询资源
+     * @param ResourceNo
+     * @return
+     */
+    Resource getResourceByResourceNo(@Param("ResourceNo") String ResourceNo);
+
+    /**
+     * 修改子资源编号状态：根据子资源编号和前端传过来的状态进行修改状态
+     * @param resourceNo 子资源编号
+     * @param dataState  资源状态
+     */
+    void updateByResourceNo(@Param("resourceNo") String resourceNo, @Param("dataState") String dataState);
+
+    /**
+     * 修改父资源编号状态：根据子资源编号和前端传过来的资源状态进行修改
+     * @param resourceNo    子资源编号
+     * @param dataState     资源状态
+     */
+    void updateByParentResourceNo(@Param("resourceNo") String resourceNo, @Param("dataState") String dataState);
 }

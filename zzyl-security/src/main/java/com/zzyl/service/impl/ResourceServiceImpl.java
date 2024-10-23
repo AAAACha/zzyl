@@ -84,7 +84,7 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
-    public void createResource(ResourceDto resourceDto) {
+    public Boolean createResource(ResourceDto resourceDto) {
         Resource resource = BeanUtil.toBean(resourceDto, Resource.class);
         Resource parentResourceNo =  resourceMapper.selectByParentResourceNo(resource.getParentResourceNo());
         resource.setDataState(parentResourceNo.getDataState());
@@ -93,6 +93,8 @@ public class ResourceServiceImpl implements ResourceService {
         resource.setResourceNo(resourceNo);
 
         resourceMapper.insert(resource);
+
+        return  true;
     }
 
     private String createResourceNo(Resource resource) {
@@ -113,5 +115,26 @@ public class ResourceServiceImpl implements ResourceService {
         } else {
             return NoProcessing.createNo(resource.getParentResourceNo(),false);
         }
+    }
+
+    @Override
+    public void enableOrDisable(ResourceDto resourceDto) {
+        Resource resource = BeanUtil.toBean(resourceDto, Resource.class);
+        if(resource == null){
+            throw new RuntimeException();
+        }
+
+        if("0".equals(resource.getDataState())){
+            String parentResourceNo = resource.getParentResourceNo();
+            Resource parentResource = resourceMapper.getResourceByResourceNo(parentResourceNo);
+            if(parentResource != null && "1".equals(parentResource.getDataState()))
+                throw new BaseException(BasicEnum.PARENT_MENU_DISABLE);
+        }
+
+        String resourceNo = resource.getResourceNo();
+        resourceMapper.updateByResourceNo(resourceNo, resource.getDataState());
+
+        resourceMapper.updateByParentResourceNo(NoProcessing.processString(resourceNo), //更新前对子资源进行处理自动补全
+                resource.getDataState());
     }
 }

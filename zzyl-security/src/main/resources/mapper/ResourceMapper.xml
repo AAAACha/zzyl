@@ -55,6 +55,12 @@
         </where>
         order by sort_no asc,create_time asc
     </select>
+    <select id="getResourceByResourceNo"
+            resultType="com.zzyl.entity.Resource">
+        select *
+        from sys_resource
+        where resource_no = #{ResourceNo}
+    </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
@@ -242,6 +248,20 @@
             update_by          = #{updateBy,jdbcType=BIGINT}
         where id = #{id,jdbcType=BIGINT}
     </update>
+
+    <update id="updateByResourceNo">
+        update sys_resource
+        set data_state = #{dataState}
+        where resource_no = #{resourceNo}
+    </update>
+
+
+    <update id="updateByParentResourceNo">
+        update sys_resource
+        set data_state = #{dataState}
+        where parent_resource_no like concat(#{resourceNo}, '%')
+    </update>
+
     <insert id="batchInsert" keyColumn="id" keyProperty="id"
             parameterType="java.util.List" useGeneratedKeys="true">
         <!--

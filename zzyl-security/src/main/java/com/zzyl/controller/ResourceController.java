@@ -64,8 +64,20 @@ public class ResourceController {
             , "resourceDto.resourceName"
             , "resourceDto.resourceType"
             , "resourceDto.sortNo"})
-    public ResponseResult<ResourceVo> createResource(@RequestBody ResourceDto resourceDto){
-        resourceService.createResource(resourceDto);
+    public ResponseResult<Boolean> createResource(@RequestBody ResourceDto resourceDto){
+        Boolean flag =  resourceService.createResource(resourceDto);
+        return ResponseResult.success(flag);
+    }
+
+    @PostMapping("/enable")
+    @ApiOperation(value = "启用禁用", notes = "启用/禁用")
+    @ApiImplicitParam(name = "resourceVo", value = "资源Vo对象", required = true, dataType = "ResourceVo")
+    @ApiOperationSupport(includeParameters = {"resourceVo.dataState",
+            "resourceVo.parentResourceNo",
+            "resourceVo.resourceNo"})
+    public ResponseResult enableOrDisable(@RequestBody ResourceDto resourceDto){
+        resourceService.enableOrDisable(resourceDto);
+
         return ResponseResult.success();
     }
 }

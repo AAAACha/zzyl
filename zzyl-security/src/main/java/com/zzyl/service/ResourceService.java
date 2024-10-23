@@ -22,5 +22,7 @@ public interface ResourceService {
 
     TreeVo resourceTreeVo(ResourceDto resourceDto);
 
-    void createResource(ResourceDto resourceDto);
+    Boolean createResource(ResourceDto resourceDto);
+
+    void enableOrDisable(ResourceDto resourceDto);
 }
