@@ -69,11 +69,7 @@ public class MemberServiceImpl implements MemberService {
 
         String token = JwtUtil.createJWT(jwtTokenManagerProperties.getBase64EncodedSecretKey(), jwtTokenManagerProperties.getTtl(), claims);
 
-        LoginVo loginVo = new LoginVo();
-        loginVo.setToken(token);
-        loginVo.setNickName(member.getName());
-
-        return loginVo;
+        return LoginVo.builder().token(token).nickName(member.getName()).build();
     }
 
     private void saveOrUpdate(Member member, String phone) {
