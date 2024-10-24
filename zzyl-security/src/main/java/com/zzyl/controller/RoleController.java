@@ -11,8 +11,11 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 /**
  * @Descriptioin RoleController
@@ -71,5 +74,20 @@ public class RoleController {
         roleService.addRole(roleDto);
 
         return ResponseResult.success();
+    }
+
+    /**
+     * 根据角色查询选中的资源数据
+     * @param roleId
+     * @return
+     */
+    @GetMapping("/find-checked-resources/{roleId}")
+    @ApiOperation(value = "根据角色查询选中的资源数据", notes = "根据角色查询选中的资源数据")
+    public ResponseResult<Set<String>> findCheckedResources (@PathVariable Long roleId){
+        log.info("根据角色查询选中的资源数据, 请求参数: roleId = #{}",roleId);
+
+        Set<String> resouceNo =  roleService.findCheckedResources(roleId);
+
+        return ResponseResult.success(resouceNo);
     }
 }

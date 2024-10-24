@@ -4,6 +4,8 @@ import com.zzyl.base.PageResponse;
 import com.zzyl.dto.RoleDto;
 import com.zzyl.vo.RoleVo;
 
+import java.util.Set;
+
 /**
  * @Descriptioin RoleService
  * @Author AvA
@@ -24,4 +26,11 @@ public interface RoleService {
      * @param roleDto
      */
     void addRole(RoleDto roleDto);
+
+    /**
+     * 根据角色查询选中的资源数据
+     * @param roleId
+     * @return
+     */
+    Set<String> findCheckedResources(Long roleId);
 }

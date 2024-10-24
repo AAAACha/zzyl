@@ -8,10 +8,13 @@ import com.zzyl.base.PageResponse;
 import com.zzyl.dto.RoleDto;
 import com.zzyl.entity.Role;
 import com.zzyl.mapper.RoleMapper;
+import com.zzyl.mapper.RoleResourceMapper;
 import com.zzyl.service.RoleService;
 import com.zzyl.vo.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 /**
  * @Descriptioin RoleServiceImpl
@@ -23,6 +26,9 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
+
+    @Autowired
+    private RoleResourceMapper roleResourceMapper;
 
     /**
      * 角色分页查询
@@ -49,5 +55,15 @@ public class RoleServiceImpl implements RoleService {
         Role role = BeanUtil.toBean(roleDto, Role.class);
 
         roleMapper.insertSelective(role);
+    }
+
+    /**
+     * 根据角色查询选中的资源数据
+     * @param roleId
+     * @return
+     */
+    @Override
+    public Set<String> findCheckedResources(Long roleId) {
+        return roleResourceMapper.findCheckedResources(roleId);
     }
 }

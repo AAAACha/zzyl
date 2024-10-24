@@ -5,6 +5,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
+import java.util.Set;
 
 @Mapper
 public interface RoleResourceMapper {
@@ -29,4 +30,10 @@ public interface RoleResourceMapper {
      * @author hewei
      */
     int batchInsert(@Param("list") List<RoleResource> list);
+
+    /**
+     * 根据角色查询选中的资源数据
+     * @return
+     */
+    Set<String> findCheckedResources(Long roleId);
 }
