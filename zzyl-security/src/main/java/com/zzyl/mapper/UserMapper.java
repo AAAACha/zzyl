@@ -41,4 +41,6 @@ public interface UserMapper {
 
     @Update("update sys_user set is_delete = 1 where id = #{userId}")
     void deleteUserById(@Param("userId") Long userId);
+
+    List<User> selectList(UserDto userDto);
 }

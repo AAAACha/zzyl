@@ -4,6 +4,8 @@ import com.zzyl.base.PageResponse;
 import com.zzyl.dto.UserDto;
 import com.zzyl.vo.UserVo;
 
+import java.util.List;
+
 /**
  * @Descriptioin UserService
  * @Author AvA
@@ -35,4 +37,11 @@ public interface UserService {
      * @param userId
      */
     void deleteUserById(Long userId);
+
+    /**
+     * 用户列表
+     * @param userDto
+     * @return
+     */
+    List<UserVo> list(UserDto userDto);
 }

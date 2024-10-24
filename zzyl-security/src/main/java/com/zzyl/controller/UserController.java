@@ -3,8 +3,6 @@ package com.zzyl.controller;
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
 import com.zzyl.dto.UserDto;
-import com.zzyl.entity.User;
-import com.zzyl.mapper.PostMapper;
 import com.zzyl.mapper.UserMapper;
 import com.zzyl.service.UserService;
 import com.zzyl.vo.UserVo;
@@ -14,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.actuate.endpoint.web.PathMappedEndpoints;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Descriptioin UserController
@@ -97,5 +97,18 @@ public class UserController {
     public ResponseResult deleteUserById(@PathVariable Long userId){
         userService.deleteUserById(userId);
         return ResponseResult.success();
+    }
+
+    /**
+     * 用户列表
+     * @param userDto
+     * @return
+     */
+    @PostMapping("/list")
+    @ApiOperation(value = "用户列表")
+    public ResponseResult<List<UserVo>> list(@RequestBody UserDto userDto){
+        List<UserVo> list = userService.list(userDto);
+
+        return ResponseResult.success(list);
     }
 }

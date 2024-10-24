@@ -163,4 +163,10 @@ public class UserServiceImpl implements UserService {
         userRoleMapper.deleteUserRoleByUserId(userId);
         userMapper.deleteUserById(userId);
     }
+
+    @Override
+    public List<UserVo> list(UserDto userDto) {
+        List<User> userList =  userMapper.selectList(userDto);
+        return BeanUtil.copyToList(userList,UserVo.class);
+    }
 }
