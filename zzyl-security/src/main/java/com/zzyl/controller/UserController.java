@@ -111,4 +111,16 @@ public class UserController {
 
         return ResponseResult.success(list);
     }
+
+    /**
+     * 密码重置
+     * @param userId
+     * @return
+     */
+    @PostMapping("/reset-passwords/{userId}")
+    @ApiOperation(value = "密码重置")
+    public ResponseResult resetPassword(@PathVariable Long userId){
+        userService.resetPassword(userId);
+        return ResponseResult.success();
+    }
 }

@@ -169,4 +169,9 @@ public class UserServiceImpl implements UserService {
         List<User> userList =  userMapper.selectList(userDto);
         return BeanUtil.copyToList(userList,UserVo.class);
     }
+
+    @Override
+    public void resetPassword(Long userId) {
+        userMapper.resetPassword(userId);
+    }
 }

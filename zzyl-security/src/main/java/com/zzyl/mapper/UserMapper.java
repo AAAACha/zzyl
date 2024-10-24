@@ -25,13 +25,6 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    /**
-     * 这是Mybatis Generator拓展插件生成的方法(请勿删除).
-     * This method corresponds to the database table sys_user
-     *
-     * @mbg.generated
-     * @author hewei
-     */
     int batchInsert(@Param("list") List<User> list);
 
     Page<User> userPage(UserDto userDto);
@@ -43,4 +36,7 @@ public interface UserMapper {
     void deleteUserById(@Param("userId") Long userId);
 
     List<User> selectList(UserDto userDto);
+
+    @Update("update sys_user set password = '123456' where id = #{userId}")
+    void resetPassword(Long userId);
 }
