@@ -48,8 +48,21 @@ public class RoleController {
             @PathVariable int pageNum,
             @PathVariable int pageSize){
 
+        log.info("角色分页查询, 请求参数: roleDto = #{}, pageNum = #{}, pageSize = #{}",roleDto, pageNum, pageSize);
+
         PageResponse<RoleVo> roleVoPage = roleService.findRoleVoPage(roleDto, pageNum, pageSize);
 
         return ResponseResult.success(roleVoPage);
+    }
+
+    @PutMapping
+    @ApiOperation(value = "角色添加")
+    public ResponseResult addRole(@RequestBody RoleDto roleDto){
+
+        log.info("角色添加, 请求参数: roleDto = #{}",roleDto);
+
+        roleService.addRole(roleDto);
+
+        return ResponseResult.success();
     }
 }

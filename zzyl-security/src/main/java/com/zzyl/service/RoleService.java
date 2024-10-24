@@ -18,4 +18,6 @@ public interface RoleService {
      * @return
      */
     PageResponse<RoleVo> findRoleVoPage(RoleDto roleDto, int pageNum, int pageSize);
+
+    void addRole(RoleDto roleDto);
 }
