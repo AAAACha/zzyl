@@ -106,7 +106,7 @@ public class ResourceController {
             "resourceDto.resourceName",
             "resourceDto.resourceType",
             "resourceDto.sortNo"})
-    public ResponseResult<Boolean> updateResource(@RequestBody ResourceDto resourceDto) {
+    public ResponseResult updateResource(@RequestBody ResourceDto resourceDto) {
         //1、日志
         log.info("资源修改，{}", resourceDto);
 
