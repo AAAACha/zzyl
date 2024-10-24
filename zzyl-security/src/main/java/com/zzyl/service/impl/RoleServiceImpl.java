@@ -3,7 +3,6 @@ package com.zzyl.service.impl;
 import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageSerializable;
 import com.zzyl.base.PageResponse;
 import com.zzyl.constant.SuperConstant;
 import com.zzyl.dto.RoleDto;
@@ -13,8 +12,6 @@ import com.zzyl.mapper.RoleMapper;
 import com.zzyl.mapper.RoleResourceMapper;
 import com.zzyl.mapper.UserRoleMapper;
 import com.zzyl.service.RoleService;
-import com.zzyl.utils.EmptyUtil;
-import com.zzyl.utils.ObjectUtil;
 import com.zzyl.vo.RoleVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,7 +33,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Autowired
     private RoleMapper roleMapper;
-
     @Autowired
     private RoleResourceMapper roleResourceMapper;
     @Autowired
