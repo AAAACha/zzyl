@@ -38,4 +38,7 @@ public interface UserMapper {
 
     @Update("update sys_user set data_state = #{status} where id = #{id}")
     void enableOrDisable(@Param("id") Long id, @Param("status") String status);
+
+    @Update("update sys_user set is_delete = 1 where id = #{userId}")
+    void deleteUserById(@Param("userId") Long userId);
 }

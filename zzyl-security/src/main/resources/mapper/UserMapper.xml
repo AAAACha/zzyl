@@ -71,6 +71,7 @@
             <if test="postNo!=null and postNo!=''">
                 and u.post_no = #{postNo}
             </if>
+            and is_delete = 0 or is_delete is null
         </where>
         order by u.create_time desc
     </select>

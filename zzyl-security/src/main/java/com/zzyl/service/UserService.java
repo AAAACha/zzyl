@@ -29,4 +29,10 @@ public interface UserService {
      * @param status
      */
     void enableOrDisable(Long id, String status);
+
+    /**
+     * 删除用户
+     * @param userId
+     */
+    void deleteUserById(Long userId);
 }

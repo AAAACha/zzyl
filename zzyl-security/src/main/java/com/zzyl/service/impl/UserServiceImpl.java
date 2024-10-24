@@ -157,4 +157,10 @@ public class UserServiceImpl implements UserService {
     public void enableOrDisable(Long id, String status) {
        userMapper.enableOrDisable(id, status);
     }
+
+    @Override
+    public void deleteUserById(Long userId) {
+        userRoleMapper.deleteUserRoleByUserId(userId);
+        userMapper.deleteUserById(userId);
+    }
 }

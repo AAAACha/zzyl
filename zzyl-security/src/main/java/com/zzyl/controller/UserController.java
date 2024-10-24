@@ -86,4 +86,16 @@ public class UserController {
         userService.enableOrDisable(id, status);
         return ResponseResult.success();
     }
+
+    /**
+     * 删除用户
+     * @param userId
+     * @return
+     */
+    @DeleteMapping("/remove/{userId}")
+    @ApiOperation("删除用户")
+    public ResponseResult deleteUserById(@PathVariable Long userId){
+        userService.deleteUserById(userId);
+        return ResponseResult.success();
+    }
 }
