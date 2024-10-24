@@ -6,6 +6,7 @@ import com.zzyl.entity.User;
 import com.zzyl.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
 
@@ -34,4 +35,7 @@ public interface UserMapper {
     int batchInsert(@Param("list") List<User> list);
 
     Page<User> userPage(UserDto userDto);
+
+    @Update("update sys_user set data_state = #{status} where id = #{id}")
+    void enableOrDisable(@Param("id") Long id, @Param("status") String status);
 }

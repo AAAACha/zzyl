@@ -152,4 +152,9 @@ public class UserServiceImpl implements UserService {
 
         return true;
     }
+
+    @Override
+    public void enableOrDisable(Long id, String status) {
+       userMapper.enableOrDisable(id, status);
+    }
 }

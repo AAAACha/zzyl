@@ -73,4 +73,17 @@ public class UserController {
         Boolean flag = userService.updateUser(userDto);
         return ResponseResult.success(flag);
     }
+
+    /**
+     * 启用或禁用用户
+     * @param id
+     * @param status
+     * @return
+     */
+    @PutMapping("is-enable/{id}/{status}")
+    @ApiOperation(value = "启用或禁用用户")
+    public ResponseResult enableOrDisable(@PathVariable Long id, @PathVariable String status ){
+        userService.enableOrDisable(id, status);
+        return ResponseResult.success();
+    }
 }

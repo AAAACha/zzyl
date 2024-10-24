@@ -22,4 +22,11 @@ public interface UserService {
     UserVo addUser(UserDto userDto);
 
     Boolean updateUser(UserDto userDto);
+
+    /**
+     * 启用或禁用用户
+     * @param id
+     * @param status
+     */
+    void enableOrDisable(Long id, String status);
 }
