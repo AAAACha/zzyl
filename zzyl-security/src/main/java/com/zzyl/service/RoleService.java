@@ -33,4 +33,8 @@ public interface RoleService {
      * @return
      */
     Set<String> findCheckedResources(Long roleId);
+
+    void updateRole(RoleDto roleDto);
+
+    int deleteRoleById(Long roleId);
 }

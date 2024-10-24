@@ -90,4 +90,22 @@ public class RoleController {
 
         return ResponseResult.success(resouceNo);
     }
+
+    @PatchMapping
+    @ApiOperation(value = "角色修改")
+    @ApiImplicitParam(name = "roleDto",value = "角色DTO对象",required = true,dataType = "roleDto")
+    @ApiOperationSupport(includeParameters = {"roleDto.roleName","roleDto.dataState","roleDto.dataScope","roleDto.checkedResourceNos","roleDto.checkedDeptNos","roleDto.id"})
+    public ResponseResult<Boolean> updateRole(@RequestBody RoleDto roleDto){
+       roleService.updateRole(roleDto);
+       return ResponseResult.success(true);
+    }
+
+    /**
+     * 删除角色
+     */
+    @ApiOperation("删除角色")
+    @DeleteMapping("/{roleId}")
+    public ResponseResult remove(@PathVariable("roleId") Long roleId) {
+        return ResponseResult.success(roleService.deleteRoleById(roleId));
+    }
 }
