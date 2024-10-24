@@ -1,6 +1,7 @@
 package com.zzyl.mapper;
 
 import com.zzyl.entity.UserRole;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -33,4 +34,7 @@ public interface UserRoleMapper {
 
     @Select("select count(*) from sys_user_role where role_id = #{roleId}")
     Integer findCountByRoleId(Long id);
+
+    @Delete("delete from sys_user_role where user_id = #{id}")
+    boolean deleteUserRoleByUserId(Long id);
 }

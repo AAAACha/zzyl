@@ -1,6 +1,7 @@
 package com.zzyl.service.impl;
 
 import cn.hutool.core.bean.BeanUtil;
+import cn.hutool.core.collection.CollUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
@@ -41,6 +42,7 @@ public class UserServiceImpl implements UserService {
     private final RoleMapper roleMapper;
     private final DeptMapper deptMapper;
     private final UserRoleMapper userRoleMapper;
+
     @Override
     public PageResponse<UserVo> userPage(UserDto userDto, int pageNum, int pageSize) {
         if (!EmptyUtil.isNullOrEmpty(userDto.getDeptNo())) {
@@ -76,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserVo addUser(UserDto userDto) {
-        if(!isLowestDept(userDto.getDeptNo())){
+        if (!isLowestDept(userDto.getDeptNo())) {
             throw new BaseException(BasicEnum.USER_LOCATED_BOTTOMED_DEPT);
         }
 
@@ -88,30 +90,66 @@ public class UserServiceImpl implements UserService {
 
         int flag = userMapper.insertSelective(user);
 
-        if(flag == 0){
+        if (flag == 0) {
             throw new RuntimeException("保存用户信息出错");
         }
 
         List<UserRole> userRoles = Lists.newArrayList();
-        userDto.getRoleVoIds().forEach(r ->{
+        userDto.getRoleVoIds().forEach(r -> {
             userRoles.add(UserRole.builder()
                     .userId(user.getId())
                     .roleId(Long.valueOf(r))
                     .dataState(SuperConstant.DATA_STATE_0)
                     .build());
         });
-        flag =  userRoleMapper.batchInsert(userRoles);
-        if(flag == 0){
+        flag = userRoleMapper.batchInsert(userRoles);
+        if (flag == 0) {
             throw new RuntimeException("保存用户角色中间表出错");
         }
         return BeanUtil.toBean(user, UserVo.class);
     }
 
-    private boolean isLowestDept(String deptNo){
+    private boolean isLowestDept(String deptNo) {
         int count = deptMapper.isLowestDept(deptNo);
-        if(count > 0){
+        if (count > 0) {
             return false;
         }
+        return true;
+    }
+
+    @Override
+    public Boolean updateUser(UserDto userDto) {
+        if (!isLowestDept(userDto.getDeptNo())) {
+            throw new BaseException(BasicEnum.USER_LOCATED_BOTTOMED_DEPT);
+        }
+
+        User user = BeanUtil.toBean(userDto, User.class);
+        user.setUsername(userDto.getEmail());
+        int flag = userMapper.updateByPrimaryKeySelective(user);
+        if (flag == 0) {
+            throw new RuntimeException("修改用户信息出错");
+        }
+
+        if(CollUtil.isNotEmpty(userDto.getRoleVoIds())){
+            boolean flagDel = userRoleMapper.deleteUserRoleByUserId(user.getId());
+            if(!flagDel) {
+                throw new RuntimeException("删除角色中间表出错");
+            }
+
+           List<UserRole> userRoles = Lists.newArrayList();
+            userDto.getRoleVoIds().forEach(r ->{
+                userRoles.add(UserRole.builder()
+                        .userId(user.getId())
+                        .roleId(Long.valueOf(r))
+                        .dataState(SuperConstant.DATA_STATE_0)
+                        .build());
+            });
+            flag = userRoleMapper.batchInsert(userRoles);
+            if(flag == 0) {
+                throw new RuntimeException("保存角色中间表出错");
+            }
+        }
+
         return true;
     }
 }

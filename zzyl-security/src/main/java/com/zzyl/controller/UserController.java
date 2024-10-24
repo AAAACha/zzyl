@@ -5,6 +5,7 @@ import com.zzyl.base.ResponseResult;
 import com.zzyl.dto.UserDto;
 import com.zzyl.entity.User;
 import com.zzyl.mapper.PostMapper;
+import com.zzyl.mapper.UserMapper;
 import com.zzyl.service.UserService;
 import com.zzyl.vo.UserVo;
 import io.swagger.annotations.Api;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final UserMapper userMapper;
 
     /**
      * 用户分页查询
@@ -47,11 +49,28 @@ public class UserController {
         return ResponseResult.success(page);
     }
 
+    /**
+     * 用户添加
+     * @param userDto
+     * @return
+     */
     @PutMapping
     @ApiOperation(value = "用户添加")
     public ResponseResult<UserVo> addUser(@RequestBody UserDto userDto){
         UserVo userVo = userService.addUser(userDto);
 
         return ResponseResult.success(userVo);
+    }
+
+    /**
+     * 用户修改
+     * @param userDto
+     * @return
+     */
+    @PatchMapping
+    @ApiOperation(value = "用户修改")
+    public ResponseResult<Boolean> updateUser(@RequestBody UserDto userDto){
+        Boolean flag = userService.updateUser(userDto);
+        return ResponseResult.success(flag);
     }
 }

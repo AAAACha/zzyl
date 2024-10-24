@@ -20,4 +20,6 @@ public interface UserService {
     PageResponse<UserVo> userPage(UserDto userDto, int pageNum, int pageSize);
 
     UserVo addUser(UserDto userDto);
+
+    Boolean updateUser(UserDto userDto);
 }
