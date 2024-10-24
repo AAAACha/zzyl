@@ -37,8 +37,19 @@
         </where>
         order by sort_no asc, create_time desc
     </select>
+  <select id="findRoleVoListInUserId" resultType="com.zzyl.vo.RoleVo">
+    SELECT r.id,r.role_name,r.label,r.sort_no,r.data_state,r.create_by,
+    r.create_time,r.update_by,r.update_time,ur.user_id,r.remark,r.data_scope
+    FROM sys_user_role ur
+    LEFT JOIN sys_role r ON ur.role_id = r.id
+    WHERE r.data_state = '0'
+    AND ur.user_id IN (
+    <foreach collection='userIds' separator=',' item='userId'>
+      #{userId}
+    </foreach>)
+  </select>
 
-    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
     delete from sys_role
     where id = #{id,jdbcType=BIGINT}
   </delete>

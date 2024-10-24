@@ -1,6 +1,9 @@
 package com.zzyl.mapper;
 
+import com.github.pagehelper.Page;
+import com.zzyl.dto.UserDto;
 import com.zzyl.entity.User;
+import com.zzyl.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -29,4 +32,6 @@ public interface UserMapper {
      * @author hewei
      */
     int batchInsert(@Param("list") List<User> list);
+
+    Page<User> userPage(UserDto userDto);
 }

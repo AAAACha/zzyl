@@ -42,4 +42,6 @@ public interface RoleMapper {
 
     @Select("select * from sys_role where data_state = '0' order by create_time desc")
     List<Role> initRoles();
+
+    List<RoleVo> findRoleVoListInUserId(@Param("userIds")List<Long> userIds);
 }
