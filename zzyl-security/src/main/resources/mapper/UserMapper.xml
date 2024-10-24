@@ -42,7 +42,7 @@
         where id = #{id,jdbcType=BIGINT}
     </select>
 
-    <select id="userPage" resultMap="BaseResultMap">
+    <select id="userPage" resultType="com.zzyl.entity.User">
         select
         u.*
         ,d.dept_name,p.post_name

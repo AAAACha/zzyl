@@ -3,6 +3,7 @@ package com.zzyl.controller;
 import com.zzyl.base.PageResponse;
 import com.zzyl.base.ResponseResult;
 import com.zzyl.dto.UserDto;
+import com.zzyl.entity.User;
 import com.zzyl.mapper.PostMapper;
 import com.zzyl.service.UserService;
 import com.zzyl.vo.UserVo;
@@ -44,5 +45,13 @@ public class UserController {
         PageResponse<UserVo> page =  userService.userPage(userDto, pageNum, PageSize);
 
         return ResponseResult.success(page);
+    }
+
+    @PutMapping
+    @ApiOperation(value = "用户添加")
+    public ResponseResult<UserVo> addUser(@RequestBody UserDto userDto){
+        UserVo userVo = userService.addUser(userDto);
+
+        return ResponseResult.success(userVo);
     }
 }

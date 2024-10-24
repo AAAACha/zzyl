@@ -1,13 +1,21 @@
 package com.zzyl.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import com.zzyl.base.PageResponse;
+import com.zzyl.constant.SuperConstant;
 import com.zzyl.dto.UserDto;
 import com.zzyl.entity.User;
+import com.zzyl.entity.UserRole;
+import com.zzyl.enums.BasicEnum;
+import com.zzyl.exception.BaseException;
+import com.zzyl.mapper.DeptMapper;
 import com.zzyl.mapper.RoleMapper;
 import com.zzyl.mapper.UserMapper;
+import com.zzyl.mapper.UserRoleMapper;
 import com.zzyl.service.UserService;
 import com.zzyl.utils.EmptyUtil;
 import com.zzyl.utils.NoProcessing;
@@ -31,6 +39,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
+    private final DeptMapper deptMapper;
+    private final UserRoleMapper userRoleMapper;
     @Override
     public PageResponse<UserVo> userPage(UserDto userDto, int pageNum, int pageSize) {
         if (!EmptyUtil.isNullOrEmpty(userDto.getDeptNo())) {
@@ -62,5 +72,46 @@ public class UserServiceImpl implements UserService {
             });
         }
         return pageResponse;
+    }
+
+    @Override
+    public UserVo addUser(UserDto userDto) {
+        if(!isLowestDept(userDto.getDeptNo())){
+            throw new BaseException(BasicEnum.USER_LOCATED_BOTTOMED_DEPT);
+        }
+
+        User user = BeanUtil.toBean(userDto, User.class);
+        user.setUsername(user.getEmail());
+        user.setNickName(user.getRealName());
+        user.setDataState(SuperConstant.DATA_STATE_0);
+        user.setPassword("123456");
+
+        int flag = userMapper.insertSelective(user);
+
+        if(flag == 0){
+            throw new RuntimeException("保存用户信息出错");
+        }
+
+        List<UserRole> userRoles = Lists.newArrayList();
+        userDto.getRoleVoIds().forEach(r ->{
+            userRoles.add(UserRole.builder()
+                    .userId(user.getId())
+                    .roleId(Long.valueOf(r))
+                    .dataState(SuperConstant.DATA_STATE_0)
+                    .build());
+        });
+        flag =  userRoleMapper.batchInsert(userRoles);
+        if(flag == 0){
+            throw new RuntimeException("保存用户角色中间表出错");
+        }
+        return BeanUtil.toBean(user, UserVo.class);
+    }
+
+    private boolean isLowestDept(String deptNo){
+        int count = deptMapper.isLowestDept(deptNo);
+        if(count > 0){
+            return false;
+        }
+        return true;
     }
 }

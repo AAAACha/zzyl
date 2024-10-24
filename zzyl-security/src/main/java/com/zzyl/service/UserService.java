@@ -18,4 +18,6 @@ public interface UserService {
      * @return
      */
     PageResponse<UserVo> userPage(UserDto userDto, int pageNum, int pageSize);
+
+    UserVo addUser(UserDto userDto);
 }
