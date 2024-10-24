@@ -15,6 +15,7 @@ import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -103,9 +104,22 @@ public class RoleController {
     /**
      * 删除角色
      */
-    @ApiOperation("删除角色")
+    @ApiOperation(value = "删除角色")
     @DeleteMapping("/{roleId}")
     public ResponseResult remove(@PathVariable("roleId") Long roleId) {
         return ResponseResult.success(roleService.deleteRoleById(roleId));
+    }
+
+    /**
+     * 角色下拉框
+     * @return
+     */
+    @PostMapping("/init-roles")
+    @ApiOperation(value = "角色下拉框")
+    public ResponseResult<List<RoleVo>> initRoles(){
+
+        List<RoleVo> roleVoList = roleService.initRoles();
+
+        return ResponseResult.success(roleVoList);
     }
 }

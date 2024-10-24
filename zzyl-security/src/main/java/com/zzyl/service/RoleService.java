@@ -4,6 +4,7 @@ import com.zzyl.base.PageResponse;
 import com.zzyl.dto.RoleDto;
 import com.zzyl.vo.RoleVo;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,4 +38,10 @@ public interface RoleService {
     void updateRole(RoleDto roleDto);
 
     int deleteRoleById(Long roleId);
+
+    /**
+     * 角色下拉框
+     * @return
+     */
+    List<RoleVo> initRoles();
 }

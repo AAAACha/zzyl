@@ -6,6 +6,7 @@ import com.zzyl.entity.Role;
 import com.zzyl.vo.RoleVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -38,4 +39,7 @@ public interface RoleMapper {
      * @return
      */
     Page<RoleVo> findRoleVoPage(RoleDto roleDto);
+
+    @Select("select * from sys_role where data_state = '0' order by create_time desc")
+    List<Role> initRoles();
 }
