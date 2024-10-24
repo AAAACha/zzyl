@@ -19,5 +19,9 @@ public interface RoleService {
      */
     PageResponse<RoleVo> findRoleVoPage(RoleDto roleDto, int pageNum, int pageSize);
 
+    /**
+     * 角色添加
+     * @param roleDto
+     */
     void addRole(RoleDto roleDto);
 }

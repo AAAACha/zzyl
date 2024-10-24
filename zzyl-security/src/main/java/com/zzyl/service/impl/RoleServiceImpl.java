@@ -40,6 +40,10 @@ public class RoleServiceImpl implements RoleService {
         return PageResponse.of(page,RoleVo.class);
     }
 
+    /**
+     * 角色添加
+     * @param roleDto
+     */
     @Override
     public void addRole(RoleDto roleDto) {
         Role role = BeanUtil.toBean(roleDto, Role.class);

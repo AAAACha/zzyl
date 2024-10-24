@@ -55,8 +55,15 @@ public class RoleController {
         return ResponseResult.success(roleVoPage);
     }
 
+    /**
+     * 角色添加
+     * @param roleDto
+     * @return
+     */
     @PutMapping
-    @ApiOperation(value = "角色添加")
+    @ApiOperation(value = "角色添加", notes = "角色添加")
+    @ApiImplicitParam(name = "roleDto", value = "roleDto", required = true, dataType = "roleDto")
+    @ApiOperationSupport(includeParameters = {"roleDto.roleName", "roleDto.dataState"})
     public ResponseResult addRole(@RequestBody RoleDto roleDto){
 
         log.info("角色添加, 请求参数: roleDto = #{}",roleDto);
