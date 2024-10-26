@@ -28,6 +28,11 @@ spring:
       url: jdbc:mysql://192.168.200.146:3306/zzyl?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai
       username: root
       password: heima123
+  redis:
+    host: 192.168.200.146
+    port: 6379
+    password: 123456
+    database: 0
 # MyBatis配置
 mybatis:
   #mapper配置文件

@@ -4,6 +4,7 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.lang.tree.Tree;
 import cn.hutool.core.lang.tree.TreeNodeConfig;
 import cn.hutool.core.lang.tree.TreeUtil;
+import com.zzyl.constant.CacheConstant;
 import com.zzyl.constant.SuperConstant;
 import com.zzyl.dto.ResourceDto;
 import com.zzyl.entity.Resource;
@@ -18,7 +19,11 @@ import com.zzyl.vo.ResourceVo;
 import com.zzyl.vo.TreeItemVo;
 import com.zzyl.vo.TreeVo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -31,6 +36,7 @@ import java.util.stream.Collectors;
  * @Date 2024-10-23
  */
 @Service
+@Transactional
 public class ResourceServiceImpl implements ResourceService {
 
     @Autowired
@@ -43,11 +49,13 @@ public class ResourceServiceImpl implements ResourceService {
      * @return
      */
     @Override
+    @Cacheable(value = CacheConstant.RESOURCE_LIST ,key ="#resourceDto.hashCode()")
     public List<ResourceVo> findResourceList(ResourceDto resourceDto) {
         return resourceMapper.findByCondition(resourceDto);
     }
 
     @Override
+    @Cacheable(value = CacheConstant.RESOURCE_TREE )
     public TreeVo resourceTreeVo(ResourceDto resourceDto) {
         resourceDto.setResourceType(SuperConstant.MENU);
         resourceDto.setDataState(SuperConstant.DATA_STATE_0);
@@ -84,6 +92,8 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
+    @Caching(evict = {@CacheEvict(value = CacheConstant.RESOURCE_LIST ,allEntries = true),
+            @CacheEvict(value = CacheConstant.RESOURCE_TREE ,allEntries = true)})
     public Boolean createResource(ResourceDto resourceDto) {
         Resource resource = BeanUtil.toBean(resourceDto, Resource.class);
         Resource parentResourceNo =  resourceMapper.selectByParentResourceNo(resource.getParentResourceNo());
@@ -96,6 +106,7 @@ public class ResourceServiceImpl implements ResourceService {
 
         return  true;
     }
+
 
     private String createResourceNo(Resource resource) {
         if(resource.getResourceType().equals("m") &&
@@ -118,6 +129,8 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
+    @Caching(evict = {@CacheEvict(value = CacheConstant.RESOURCE_LIST ,allEntries = true),
+            @CacheEvict(value = CacheConstant.RESOURCE_TREE ,allEntries = true)})
     public void enableOrDisable(ResourceDto resourceDto) {
         Resource resource = BeanUtil.toBean(resourceDto, Resource.class);
         if(resource == null){
@@ -139,12 +152,16 @@ public class ResourceServiceImpl implements ResourceService {
     }
 
     @Override
+    @Caching(evict = {@CacheEvict(value = CacheConstant.RESOURCE_LIST ,allEntries = true),
+            @CacheEvict(value = CacheConstant.RESOURCE_TREE ,allEntries = true)})
     public void updateResource(ResourceDto resourceDto) {
         Resource resource = BeanUtil.toBean(resourceDto, Resource.class);
         resourceMapper.updateByPrimaryKeySelective(resource);
     }
 
     @Override
+    @Caching(evict = {@CacheEvict(value = CacheConstant.RESOURCE_LIST ,allEntries = true),
+            @CacheEvict(value = CacheConstant.RESOURCE_TREE ,allEntries = true)})
     public void deleteByResourceNo(String resourceNo) {
         if (hasChildByMenuId(resourceNo)) {
             throw new BaseException(BasicEnum.CONTAINS_CHILD_RESOURCE_DELETE_FAILED);

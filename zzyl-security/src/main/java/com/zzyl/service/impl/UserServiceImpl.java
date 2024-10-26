@@ -24,7 +24,9 @@ import com.zzyl.vo.RoleVo;
 import com.zzyl.vo.UserVo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -118,26 +120,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public Boolean updateUser(UserDto userDto) {
-        if (!isLowestDept(userDto.getDeptNo())) {
+        if(!isLowestDept(userDto.getDeptNo())){
             throw new BaseException(BasicEnum.USER_LOCATED_BOTTOMED_DEPT);
         }
 
         User user = BeanUtil.toBean(userDto, User.class);
         user.setUsername(userDto.getEmail());
         int flag = userMapper.updateByPrimaryKeySelective(user);
-        if (flag == 0) {
+        if(flag == 0){
             throw new RuntimeException("修改用户信息出错");
         }
 
         if(CollUtil.isNotEmpty(userDto.getRoleVoIds())){
             boolean flagDel = userRoleMapper.deleteUserRoleByUserId(user.getId());
-            if(!flagDel) {
+            if(!flagDel){
                 throw new RuntimeException("删除角色中间表出错");
             }
-
-           List<UserRole> userRoles = Lists.newArrayList();
-            userDto.getRoleVoIds().forEach(r ->{
+            List<UserRole> userRoles = Lists.newArrayList();
+            userDto.getRoleVoIds().forEach(r -> {
                 userRoles.add(UserRole.builder()
                         .userId(user.getId())
                         .roleId(Long.valueOf(r))
@@ -145,11 +147,10 @@ public class UserServiceImpl implements UserService {
                         .build());
             });
             flag = userRoleMapper.batchInsert(userRoles);
-            if(flag == 0) {
+            if(flag == 0){
                 throw new RuntimeException("保存角色中间表出错");
             }
         }
-
         return true;
     }
 
