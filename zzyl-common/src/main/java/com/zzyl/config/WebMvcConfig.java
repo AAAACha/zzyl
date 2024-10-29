@@ -7,6 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.deser.LocalTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalTimeSerializer;
+import com.zzyl.intercept.AdminIntercept;
 import com.zzyl.intercept.UserInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
@@ -32,6 +33,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Autowired
     private UserInterceptor userInterceptor;
+
+    @Autowired
+    private AdminIntercept adminIntercept;
 
     //拦截的时候过滤掉swagger相关路径和登录相关接口
     private static final String[] EXCLUDE_PATH_PATTERNS = new String[]{"/swagger-ui.html",
@@ -85,5 +89,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(userInterceptor)
                 .excludePathPatterns(EXCLUDE_PATH_PATTERNS)
                 .addPathPatterns("/customer/**");
+        registry.addInterceptor(adminIntercept).excludePathPatterns(ADMIN_EXCLUDE_PATH_PATTERNS).addPathPatterns("/**");
+
     }
+
+    private static final String[] ADMIN_EXCLUDE_PATH_PATTERNS = new String[]{"/swagger-ui.html",
+            "/webjars/**",
+            "/swagger-resources",
+            "/v2/api-docs",
+            "/customer/**",
+            "/security/**",
+            "/common/**"};
 }

@@ -1,40 +1,30 @@
 package com.zzyl.controller;
 
-import com.zzyl.base.ResponseResult;
-import com.zzyl.dto.LoginDto;
-import com.zzyl.utils.JwtUtil;
-import com.zzyl.vo.UserVo;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * @author sjqn
  * 后台登录临时接口，后期会进行改造
  */
 @RestController
-public class LoginController {
+public class TemporaryLoginController {
 
 
-    @PostMapping("/security/login")
-    public ResponseResult login(@RequestBody LoginDto loginDto){
-
-        UserVo userVo = new UserVo();
-
-        Map<String,Object> map = new HashMap<>();
-        map.put("username",loginDto.getUsername());
-
-        userVo.setUserToken(JwtUtil.createJWT("itheima",600000,map));
-        return ResponseResult.success(userVo);
-    }
+//    @PostMapping("/security/login")
+//    public ResponseResult login(@RequestBody LoginDto loginDto){
+//
+//        UserVo userVo = new UserVo();
+//
+//        Map<String,Object> map = new HashMap<>();
+//        map.put("username",loginDto.getUsername());
+//
+//        userVo.setUserToken(JwtUtil.createJWT("itheima",600000,map));
+//        return ResponseResult.success(userVo);
+//    }
 
     @GetMapping("/resource/menus")
     public String menus(){
         return menu;
-
     }
 
     static String menu = "{\n" +

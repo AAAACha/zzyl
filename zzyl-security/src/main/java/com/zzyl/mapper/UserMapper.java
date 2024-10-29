@@ -6,6 +6,7 @@ import com.zzyl.entity.User;
 import com.zzyl.vo.UserVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.util.List;
@@ -39,4 +40,7 @@ public interface UserMapper {
 
     @Update("update sys_user set password = '123456' where id = #{userId}")
     void resetPassword(Long userId);
+
+    @Select(" select * from sys_user where username=#{username} and IFNULL(is_delete,0)=0")
+    UserVo findUserVoForLogin(String username);
 }

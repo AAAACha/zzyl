@@ -79,6 +79,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserVo addUser(UserDto userDto) {
         if (!isLowestDept(userDto.getDeptNo())) {
             throw new BaseException(BasicEnum.USER_LOCATED_BOTTOMED_DEPT);
