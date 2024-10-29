@@ -25,6 +25,15 @@
         <result column="update_by" jdbcType="BIGINT" property="updateBy"/>
     </resultMap>
 
+    <resultMap id="menuVoMap" type="com.zzyl.vo.MenuVo">
+        <result property="name" column="resource_name"></result>
+        <result property="path" column="request_path"></result>
+        <result property="meta.icon" column="icon"></result>
+        <result property="meta.title" column="resource_name"></result>
+        <result property="parentResourceNo" column="parent_resource_no"></result>
+        <result property="resourceNo" column="resource_no"></result>
+    </resultMap>
+
     <sql id="Base_Column_List">
         id, resource_no, parent_resource_no, resource_name, resource_type, request_path,
     label, data_state, sort_no, icon, create_time, update_time, remark, create_by, update_by
@@ -78,6 +87,14 @@
           and sr.data_state = '0'
           and sr.resource_type = 'r'
           and sur.user_id = #{userId}
+    </select>
+
+    <select id="findListByUserId" resultMap="menuVoMap" parameterType="java.lang.Long">
+        select sr.*
+        from sys_resource sr
+                 inner join sys_role_resource srr on sr.resource_no = srr.resource_no
+                 inner join sys_user_role sur on srr.role_id = sur.role_id
+        where sur.user_id = #{userId} and sr.resource_type='m' and sr.data_state='0'
     </select>
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">

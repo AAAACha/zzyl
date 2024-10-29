@@ -6,6 +6,8 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.zzyl.base.ResponseResult;
 import com.zzyl.dto.ResourceDto;
 import com.zzyl.service.ResourceService;
+import com.zzyl.utils.UserThreadLocal;
+import com.zzyl.vo.MenuVo;
 import com.zzyl.vo.ResourceVo;
 import com.zzyl.vo.TreeVo;
 import io.swagger.annotations.Api;
@@ -130,5 +132,13 @@ public class ResourceController {
         resourceService.deleteByResourceNo(resourceNo);
 
         return ResponseResult.success();
+    }
+
+    @GetMapping("/menus")
+    @ApiOperation(value = "左侧菜单", notes = "左侧菜单")
+    public ResponseResult<List<MenuVo>> menus() {
+        Long userId = UserThreadLocal.getMgtUserId();
+        List<MenuVo> menus = resourceService.menus(userId);
+        return ResponseResult.success(menus);
     }
 }

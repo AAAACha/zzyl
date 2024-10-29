@@ -1,6 +1,7 @@
 package com.zzyl.service;
 
 import com.zzyl.dto.ResourceDto;
+import com.zzyl.vo.MenuVo;
 import com.zzyl.vo.ResourceVo;
 import com.zzyl.vo.TreeVo;
 
@@ -29,4 +30,11 @@ public interface ResourceService {
     void updateResource(ResourceDto resourceDto);
 
     void deleteByResourceNo(String resourceNo);
+
+    /**
+     * 根据用户id查询对应的资源数据
+     * @param userId
+     * @return
+     */
+    List<MenuVo> menus(Long userId);
 }

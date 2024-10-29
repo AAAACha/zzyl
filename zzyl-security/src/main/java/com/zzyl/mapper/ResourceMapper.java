@@ -2,6 +2,7 @@ package com.zzyl.mapper;
 
 import com.zzyl.dto.ResourceDto;
 import com.zzyl.entity.Resource;
+import com.zzyl.vo.MenuVo;
 import com.zzyl.vo.ResourceVo;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -70,4 +71,6 @@ public interface ResourceMapper {
     int hasChildByMenuId(@Param("resourceNo")String resourceNo);
 
     List<Resource>  findResourceVoListByUserId(Long userId);
+
+    List<MenuVo> findListByUserId(Long userId);
 }

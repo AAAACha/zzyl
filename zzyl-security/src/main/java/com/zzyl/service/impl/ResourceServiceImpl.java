@@ -15,6 +15,7 @@ import com.zzyl.service.ResourceService;
 import com.zzyl.utils.EmptyUtil;
 import com.zzyl.utils.NoProcessing;
 import com.zzyl.utils.ObjectUtil;
+import com.zzyl.vo.MenuVo;
 import com.zzyl.vo.ResourceVo;
 import com.zzyl.vo.TreeItemVo;
 import com.zzyl.vo.TreeVo;
@@ -189,5 +190,36 @@ public class ResourceServiceImpl implements ResourceService {
         //2、将查询结果返回
         return result > 0 ? true : false;
 
+    }
+
+    /**
+     * 获取登录人资源菜单树形集合数据
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<MenuVo> menus(Long userId) {
+
+        //1.根据userId查询所有菜单数据集合
+        List<MenuVo> menuVos = resourceMapper.findListByUserId(userId);
+        //2.使用hutool构建树形菜单数据
+        //利用TreeUtil.build(所有菜单数据集合，根节点编号，构建每个节点lambda表达式)方法，返回List<Tree<String>>
+        List<Tree<String>> treeList = TreeUtil.build(menuVos, SuperConstant.ROOT_PARENT_ID, (menu, treeNode) -> {
+            //   每个节点设置标准属性：id,parentId,name,
+            treeNode.setId(menu.getResourceNo());
+            treeNode.setParentId(menu.getParentResourceNo());
+            treeNode.setName(menu.getName());
+            //   每个节点设置扩展属性：path,redirect,meta,
+            treeNode.putExtra("path", menu.getPath());
+            treeNode.putExtra("redirect", "/" + menu.getName());
+            treeNode.putExtra("meta", menu.getMeta());
+        });
+
+        //3.将List<Tree<String>>转换为List<MenuVo>
+        List<MenuVo> menuVoList = BeanUtil.copyToList(treeList, MenuVo.class);
+
+        //4.返回数据
+        return menuVoList;
     }
 }
