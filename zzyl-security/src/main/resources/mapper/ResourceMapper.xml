@@ -68,6 +68,18 @@
         where parent_resource_no = #{resourceNo}
     </select>
 
+    <select id="findResourceVoListByUserId" resultType="com.zzyl.entity.Resource">
+        select sr.request_path requestPath
+        from sys_user_role sur,
+             sys_role_resource srr,
+             sys_resource sr
+        where sur.role_id = srr.role_id
+          and srr.resource_no = sr.resource_no
+          and sr.data_state = '0'
+          and sr.resource_type = 'r'
+          and sur.user_id = #{userId}
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
         from sys_resource

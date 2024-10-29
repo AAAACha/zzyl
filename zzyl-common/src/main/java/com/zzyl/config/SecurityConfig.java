@@ -1,5 +1,8 @@
 package com.zzyl.config;
 
+import com.zzyl.properties.SecurityConfigProperties;
+import com.zzyl.security.JwtTokenAuthorizationManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,19 +12,29 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.List;
+
 /**
  *  权限核心配置类
  */
 @Configuration
 public class SecurityConfig  {
 
+    @Autowired
+    SecurityConfigProperties securityConfigProperties;
+
+    @Autowired
+    private JwtTokenAuthorizationManager jwtTokenAuthorizationManager;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         //忽略地址
+        List<String> ignoreUrl = securityConfigProperties.getIgnoreUrl();
         http.authorizeHttpRequests()
-                .antMatchers( "/security/login" )
-                .permitAll();
+                .antMatchers(  ignoreUrl.toArray( new String[ignoreUrl.size() ] ))
+                .permitAll()
+                .anyRequest().access(jwtTokenAuthorizationManager);
 
         http.csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS );//关闭session

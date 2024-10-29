@@ -45,4 +45,6 @@ public class UserCacheConstant {
      */
     public static final String JWT_TOKEN = PREFIX+"jwt-token:";
 
+    public static final String ACCESS_URLS_CACHE = "user:access-urls:";
+
 }

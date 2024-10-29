@@ -68,4 +68,6 @@ public interface ResourceMapper {
     void deleteByResourceNo(String resourceNo);
 
     int hasChildByMenuId(@Param("resourceNo")String resourceNo);
+
+    List<Resource>  findResourceVoListByUserId(Long userId);
 }
